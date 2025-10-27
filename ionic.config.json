@@ -1,0 +1,8 @@
+{
+  "name": "Camp Cafe",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "50cad0c8"
+}
