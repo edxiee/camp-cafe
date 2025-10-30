@@ -7,7 +7,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-signup',
   standalone: true,
   imports: [IonicModule, FormsModule, CommonModule],
-  template: `<ion-content [fullscreen]="true" class="signup-bg">
+  template: `
+  <ion-content [fullscreen]="true" class="signup-bg">
       <div class="logo">
         <img src="assets/logo.png" alt="Camp Café Logo" />
       </div>
