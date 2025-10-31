@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -9,54 +11,54 @@ import { CommonModule } from '@angular/common';
   imports: [IonicModule, FormsModule, CommonModule],
   template: `
   <ion-content [fullscreen]="true" class="signup-bg">
-      <div class="logo">
-        <img src="assets/logo.png" alt="Camp Café Logo" />
+  <div class="container">
+    <div class="logo">
+      <img src="assets/logo.png" alt="Camp Café Logo" />
+    </div>
+
+    <div class="form-container">
+      <h2>SIGN UP</h2>
+
+        <ion-input placeholder="Username" 
+        [(ngModel)]="username"
+        class="input-field"
+        ></ion-input>
+
+        <ion-input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Password"
+          [(ngModel)]="password"
+          class="input-field"
+        ></ion-input>
+
+        <ion-input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Retype Password"
+          [(ngModel)]="retypePassword"
+          class="input-field"
+        ></ion-input>
+
+      <ion-button expand="block" class="signup-btn" (click)="onSignup()">
+        Sign Up
+      </ion-button>
+
+      <div class="options">
+        <ion-checkbox
+          [(ngModel)]="showPassword"
+          labelPlacement="end"
+        >
+          show password
+        </ion-checkbox>
       </div>
+    </div>
 
-      <div class="form-container">
-        <h2>SIGN UP</h2>
-
-        <ion-item lines="none">
-          <ion-input placeholder="Username" [(ngModel)]="username"></ion-input>
-        </ion-item>
-
-        <ion-item lines="none">
-          <ion-input
-            [type]="showPassword ? 'text' : 'password'"
-            placeholder="Password"
-            [(ngModel)]="password"
-          ></ion-input>
-        </ion-item>
-
-        <ion-item lines="none">
-          <ion-input
-            [type]="showPassword ? 'text' : 'password'"
-            placeholder="Retype Password"
-            [(ngModel)]="retypePassword"
-          ></ion-input>
-        </ion-item>
-
-        <ion-button expand="block" class="signup-btn" (click)="onSignup()">
-          Sign Up
-        </ion-button>
-
-        <div class="options">
-          <ion-checkbox
-            [(ngModel)]="showPassword"
-            labelPlacement="end"
-            color="warning"
-          >
-            show password
-          </ion-checkbox>
-          <a href="#" class="forgot">Forgot password?</a>
-        </div>
-      </div>
-
-      <div class="bottom-text">
-        Already have an account? <a routerLink="/login"><b>Log In!</b></a>
-      </div>
-    </ion-content>
-`,
+    <div class="bottom-text">
+      Already have an account? 
+      <a href="/login" class="link" (click)="goToLogin()">Log In!</a>
+    </div>
+  </div>
+  </ion-content>
+  `,
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage {
@@ -65,7 +67,23 @@ export class SignupPage {
   retypePassword = '';
   showPassword = false;
 
+  constructor(private auth: AuthService, private router: Router) {}
+
   onSignup() {
-    console.log('Signing up:', this.username);
+  if (this.password !== this.retypePassword) {
+    alert('Passwords do not match!');
+    return;
+  }
+
+  const success = this.auth.signup(this.username, this.password);
+  if (success) {
+    alert('Signup successful!');
+    this.router.navigate(['/login']);
+  } else {
+    alert('Username already exists!');
+  }
+}
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 }
