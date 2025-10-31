@@ -57,6 +57,7 @@ import { AuthService } from 'src/app/auth.service';
       <a href="/login" class="link" (click)="goToLogin()">Log In!</a>
     </div>
   </div>
+  <img src="assets/images/waves.png" class="waves" />
   </ion-content>
   `,
   styleUrls: ['./signup.page.scss'],
@@ -87,3 +88,5 @@ export class SignupPage {
     this.router.navigate(['/login']);
   }
 }
+
+export class SignupPageModule {}

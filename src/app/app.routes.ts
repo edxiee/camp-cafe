@@ -14,4 +14,8 @@ export const routes: Routes = [
     path: 'signup',
     loadComponent: () => import('./pages/signup/signup.page').then(m => m.SignupPage),
   },
+  {
+    path: 'tabs',
+    loadChildren: () => import('./tab-menu/tabs/tabs.module').then(m => m.TabsPageModule)
+  },
 ];

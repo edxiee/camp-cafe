@@ -102,7 +102,6 @@ h2 {
   pointer-events: none; /* prevents blocking clicks */
 }
 
-
 ion-content::before {
   content: "";
   position: absolute;
@@ -113,4 +112,9 @@ ion-content::before {
   background: url('~src/assets/images/waves.png') no-repeat bottom center;
   background-size: cover;
   z-index: 0;
+}
+
+.form-container, .logo, .bottom-text {
+  position: relative;
+  z-index: 2;
 }

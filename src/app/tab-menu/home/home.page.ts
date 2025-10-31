@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
   standalone: false,
 })
-export class Tab1Page {
+export class HomePage {
 
   constructor() {}
 

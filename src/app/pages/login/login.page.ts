@@ -49,6 +49,7 @@ import { AuthService } from 'src/app/auth.service';
         <a href="/signup" class="link" (click)="goToSignup()">Sign up now!</a>
       </p>
     </div>
+    <img src="assets/images/waves.png" class="waves" />
   </ion-content>
   `,
   styleUrls: ['./login.page.scss'],
@@ -63,7 +64,7 @@ export class LoginPage {
   onLogin() {
   if (this.auth.login(this.username, this.password)) {
     alert('Login successful!');
-    this.router.navigate(['/home']); // or wherever you want
+    this.router.navigate(['/tabs']);
   } else {
     alert('Invalid username or password.');
   }
@@ -73,3 +74,5 @@ export class LoginPage {
     this.router.navigate(['/signup']);
   }
 }
+
+export class LoginPageModule {}
