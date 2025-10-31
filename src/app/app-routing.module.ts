@@ -14,6 +14,8 @@ const routes: Routes = [
     loadComponent: () =>
       import('./pages/signup/signup.page').then((m) => m.SignupPage),
   },
+ 
+
 ];
 
 @NgModule({
