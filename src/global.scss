@@ -35,3 +35,21 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+.centered-modal .modal-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  border-radius: 16px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.centered-modal .ion-content {
+  --background: transparent; /* Keep dark overlay behind modal */
+}
+
