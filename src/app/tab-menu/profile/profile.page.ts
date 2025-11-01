@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth.service';
-import { UpdateProfileModal } from './update-profile.modal';
+import { UpdateProfileModal } from './updateProfile/update-profile.modal';
 
 @Component({
   selector: 'app-tab4',
@@ -33,19 +33,19 @@ export class ProfilePage {
   const modal = await this.modalCtrl.create({
     component: UpdateProfileModal,
     componentProps: { currentName: this.name },
-    cssClass: 'centered-modal'  // This makes it appear as a box
+    cssClass: 'custom-modal'
   });
 
-  modal.onDidDismiss().then((res) => {
-    if (res.data && res.data.newName) {
-      this.name = res.data.newName;
-      this.auth.updateName(res.data.newName);
-      alert('Profile updated!');
-    }
-  });
+  const result = await modal.present();
+  const { data } = await modal.onDidDismiss();
 
-  await modal.present();
+  if (data && data.newName) {
+    this.name = data.newName;
+    this.auth.updateName(data.newName);
+    alert('Profile updated!');
+  }
 }
+
 
   onLogout() {
     this.auth.logout();
