@@ -1,17 +1,16 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      ProfilePage
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="header">
+    <h1>MY PROFILE</h1>
+    <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
+    <p>{{ name }}</p>
+  </div>
 
-  <app-explore-container name="Parang mas gusto ko dito"></app-explore-container>
+  <div class="button-container">
+    <ion-button expand="block" class="gold-btn" (click)="updateProfile()">Update Profile</ion-button>
+    <ion-button expand="block" class="gold-btn">Security</ion-button>
+    <ion-button expand="block" class="gold-btn">Billing</ion-button>
+    <ion-button expand="block" class="gold-btn">Settings</ion-button>
+    <ion-button expand="block" class="gold-btn">About the App</ion-button>
+    <ion-button expand="block" class="red-btn" (click)="onLogout()">Log out</ion-button>
+  </div>
 </ion-content>
