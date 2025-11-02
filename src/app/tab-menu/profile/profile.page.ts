@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth.service';
 import { UpdateProfileModal } from './updateProfile/update-profile.modal';
+import { AboutAppModal } from './aboutApp/aboutApp.modal';
 
 @Component({
   selector: 'app-tab4',
@@ -46,6 +47,14 @@ export class ProfilePage {
   }
 }
 
+  async aboutApp() {
+  const modal = await this.modalCtrl.create({
+    component: AboutAppModal,
+    cssClass: 'custom-modal'
+  });
+
+  await modal.present();
+}
 
   onLogout() {
     this.auth.logout();
