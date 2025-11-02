@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
       <ion-toolbar>
         <ion-title>Update Profile</ion-title>
         <ion-buttons slot="end">
-          <ion-button fill="clear" (click)="dismiss()">✕</ion-button>
+          <ion-button fill="clear" (click)="dismiss()">Close</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
