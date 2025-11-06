@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding modal-content">
   <h1>Camp Café</h1>
   <div class="about-container">
     <p>

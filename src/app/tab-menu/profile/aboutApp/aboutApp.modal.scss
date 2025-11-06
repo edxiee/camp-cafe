@@ -3,6 +3,11 @@ ion-toolbar {
   --color: #fff;
 }
 
+.modal-content {
+  --background: white;
+  padding: 20px;
+}
+
 .about-container {
   background-color: #d7b89c; /* Latte brown */
   padding: 20px;
