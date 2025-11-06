@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RedirectIfLoggedInGuard } from './guards/redirect-if-logged-in.guard';
 
 const routes: Routes = [
   {
@@ -9,10 +10,12 @@ const routes: Routes = [
   },
   {
     path: 'login',
+    canActivate: [RedirectIfLoggedInGuard],
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'signup',
+    canActivate: [RedirectIfLoggedInGuard],
     loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule)
   },
   {
@@ -29,6 +32,7 @@ const routes: Routes = [
   },
   // Fallback: any unknown route goes to login (MUST be last)
   { path: '**', redirectTo: 'login' },
+ 
 
 
 

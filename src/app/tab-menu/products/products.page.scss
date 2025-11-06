@@ -16,13 +16,43 @@ ion-content.products-page {
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px;
+    column-gap: 8px;
+    row-gap: 4px;
     padding: 16px;
     align-items: stretch;
 }
 
+.category-segment {
+    margin: 8px 8px 0;
+    --background: #ffffff;
+    --indicator-color: transparent;
+    --indicator-height: 0;
+    --indicator-border-radius: 0;
+    box-shadow: none;
+}
+
+.category-segment ion-segment-button {
+    --background: transparent;
+    --background-checked: transparent;
+    --color: #666;
+    --color-checked: #111;
+
+}
+
+.category-segment ion-segment-button ion-label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Show underline only on the selected segment button */
+.category-segment ion-segment-button.segment-button-checked,
+.category-segment ion-segment-button[aria-pressed="true"],
+.category-segment ion-segment-button.ion-activated {
+    border-bottom-color: transparent;
+}
+
 .product-card {
-    border-radius: 16px;
+    border-radius: 0;
     overflow: hidden;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     transition: transform 140ms ease, box-shadow 140ms ease;
@@ -49,14 +79,36 @@ ion-card-title {
     font-size: 16px;
     font-weight: 600;
     color: black;
+    text-align: left;
 }
 
 @media (min-width: 768px) {
     .card-grid {
-        gap: 20px;
+        column-gap: 8px;
+        row-gap: 6px;
     }
     .card-image {
         height: 160px;
     }
+}
+
+
+
+ion-card-content{
+  color: #111;
+    background-color: #ffffff;
+}
+.no-image {
+    height: 140px;
+    display: grid;
+    place-items: center;
+    background: #f2f2f2;
+    color: #666;
+}
+
+.empty {
+    padding: 24px 16px;
+    color: #666;
+    text-align: center;
 }
 
