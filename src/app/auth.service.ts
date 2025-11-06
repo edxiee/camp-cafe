@@ -1,73 +1,51 @@
 import { Injectable } from '@angular/core';
+import { Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, User } from '@angular/fire/auth';
+import { map, Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  private users = [
-    { username: 'admin', password: '1234' },
-    { username: 'user', password: 'abcd' },
-  ];
+  user$: Observable<User | null>;
 
-  private currentUser: any = null;
-
-  constructor() {}
-
-  // ✅ LOGIN
-  login(username: string, password: string): boolean {
-    const user = this.users.find(
-      (u) => u.username === username && u.password === password
-    );
-
-    if (user) {
-      const savedName = localStorage.getItem(`${username}-name`);
-      this.currentUser = {
-        username: user.username,
-        name: savedName || user.username, // default display name
-      };
-      localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-      return true;
-    }
-    return false;
+  constructor(private auth: Auth) {
+    // Stream of the current user (null if logged out)
+    this.user$ = authState(this.auth);
   }
 
-  // ✅ SIGNUP
-  signup(username: string, password: string): boolean {
-    const exists = this.users.find((u) => u.username === username);
-    if (exists) return false;
-
-    this.users.push({ username, password });
-    // store display name
-    localStorage.setItem(`${username}-name`, username);
-    return true;
+  // Firebase Email/Password Signup
+  signUp(email: string, password: string) {
+    return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
-  // ✅ LOGOUT
+  // Firebase Email/Password Sign-in
+  signIn(email: string, password: string) {
+    return signInWithEmailAndPassword(this.auth, email, password);
+  }
+
+  // Sign out
+  signOut() {
+    return signOut(this.auth);
+  }
+
+  // Backwards-compatible alias for existing code
   logout() {
-    this.currentUser = null;
-    localStorage.removeItem('currentUser');
+    return this.signOut();
   }
 
-  // ✅ CHECK LOGIN STATUS
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('currentUser');
+  // Convenience boolean observable for templates/guards if needed
+  isLoggedIn$(): Observable<boolean> {
+    return this.user$.pipe(map((u) => !!u));
   }
 
-  // ✅ GET CURRENT USER
+  // Snapshot access (may be null)
   getCurrentUser() {
-    if (!this.currentUser) {
-      const saved = localStorage.getItem('currentUser');
-      if (saved) this.currentUser = JSON.parse(saved);
-    }
-    return this.currentUser;
+    return Promise.resolve(this.auth.currentUser);
   }
 
-  // ✅ UPDATE DISPLAY NAME
-  updateName(newName: string) {
-    if (this.currentUser) {
-      this.currentUser.name = newName;
-      localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-      localStorage.setItem(`${this.currentUser.username}-name`, newName);
+  // Update the Firebase user's display name
+  async updateName(newName: string) {
+    const user = this.auth.currentUser;
+    if (user) {
+      await updateProfile(user, { displayName: newName });
     }
   }
 }
