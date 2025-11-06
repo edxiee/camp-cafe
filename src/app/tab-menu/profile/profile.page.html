@@ -1,0 +1,16 @@
+<ion-content [fullscreen]="true">
+  <div class="header">
+    <h1>MY PROFILE</h1>
+    <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
+    <p>{{ name }}</p>
+  </div>
+
+  <div class="button-container">
+    <ion-button expand="block" class="gold-btn" (click)="updateProfile()">Update Profile</ion-button>
+    <ion-button expand="block" class="gold-btn">Security</ion-button>
+    <ion-button expand="block" class="gold-btn">Billing</ion-button>
+    <ion-button expand="block" class="gold-btn">Settings</ion-button>
+    <ion-button expand="block" class="gold-btn" (click)="aboutApp()">About the App</ion-button>
+    <ion-button expand="block" class="red-btn" (click)="onLogout()">Log out</ion-button>
+  </div>
+</ion-content>

@@ -16,7 +16,7 @@ ion-content {
   flex: 1;
   padding: 20px;
   z-index: 2;
-  margin-top: 5vh; // pushes slightly down for balance
+  margin-top: 5rem;
 }
 
 .logo {
@@ -112,4 +112,9 @@ ion-content::before {
   background: url('~src/assets/images/waves.png') no-repeat bottom center;
   background-size: cover;
   z-index: 0;
+}
+
+.form-container, .logo, .bottom-text {
+  position: relative;
+  z-index: 2;
 }
