@@ -20,9 +20,18 @@ const routes: Routes = [
     loadChildren: () => import('./tab-menu/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'payment',
-    loadChildren: () => import('./payment/payment.module').then(m => m.PaymentPageModule)
-  }
+    path: 'pages',
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesPageModule)
+  },
+  {
+    path: 'admin/products',
+    loadChildren: () => import('./admin/products/products.module').then( m => m.ProductsPageModule)
+  },
+  // Fallback: any unknown route goes to login (MUST be last)
+  { path: '**', redirectTo: 'login' },
+
+
+
 ];
 
 @NgModule({

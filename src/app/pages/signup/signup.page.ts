@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
+import { UserService } from 'src/app/user.service';
+
+//rentoy comment
 
 @Component({
   selector: 'app-signup',
@@ -15,8 +18,19 @@ import { AuthService } from 'src/app/auth.service';
     <div class="form-container">
       <h2>SIGN UP</h2>
 
-        <ion-input placeholder="Username" 
-        [(ngModel)]="username"
+        <ion-input placeholder="First Name"
+        [(ngModel)]="firstName"
+        class="input-field"
+        ></ion-input>
+
+        <ion-input placeholder="Last Name"
+        [(ngModel)]="lastName"
+        class="input-field"
+        ></ion-input>
+
+        <ion-input placeholder="Email"
+        type="email"
+        [(ngModel)]="email"
         class="input-field"
         ></ion-input>
 
@@ -34,8 +48,13 @@ import { AuthService } from 'src/app/auth.service';
           class="input-field"
         ></ion-input>
 
-      <ion-button expand="block" class="signup-btn" (click)="onSignup()">
-        Sign Up
+      <ion-button 
+        expand="block" 
+        class="signup-btn" 
+        (click)="onSignup()"
+        [disabled]="isLoading"
+      >
+        {{ isLoading ? 'Signing up...' : 'Sign Up' }}
       </ion-button>
 
       <div class="options">
@@ -54,34 +73,77 @@ import { AuthService } from 'src/app/auth.service';
       <a class="link" (click)="goToLogin()">Log In!</a>
     </div>
   </div>
-  <img src="assets/images/waves.png" class="waves" />
+  
   </ion-content>
   `,
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage {
-  username = '';
+  firstName = '';
+  lastName = '';
+  email = '';
   password = '';
   retypePassword = '';
   showPassword = false;
+  isLoading = false;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
-  onSignup() {
-    if (this.password !== this.retypePassword) {
-      alert('Passwords do not match!');
-      return;
-    }
+  async onSignup() {
+    if (this.isLoading) return;
+    this.isLoading = true;
+    try {
+      const firstName = this.firstName?.trim();
+      const lastName = this.lastName?.trim();
+      const email = this.email?.trim();
 
-    const success = this.auth.signup(this.username, this.password);
-    if (success) {
+      if (!firstName || !lastName) {
+        alert('Please enter your first and last name.');
+        return;
+      }
+      if (!email) {
+        alert('Please enter your email.');
+        return;
+      }
+      if (!this.password) {
+        alert('Please enter your password.');
+        return;
+      }
+      if (this.password !== this.retypePassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      // Sign up in Firebase Auth
+      const cred = await this.auth.signUp(email, this.password);
+      const uid = cred.user?.uid;
+      if (!uid) {
+        throw new Error('Signup failed: No user ID returned');
+      }
+
+      // Create user profile in Firestore
+      const username = (email.split('@')[0] || '').toLowerCase();
+      await this.userService.createUserProfile(uid, {
+        email,
+        username,
+        firstName,
+        lastName,
+      });
+
       alert('Signup successful!');
       this.router.navigate(['/login']);
-    } else {
-      alert('Username already exists!');
+    } catch (err: any) {
+      console.error('Signup error:', err);
+      const msg = err?.message || 'Signup failed';
+      alert(msg);
+    } finally {
+      this.isLoading = false;
     }
   }
-
   goToLogin() {
     this.router.navigate(['/login']);
   }

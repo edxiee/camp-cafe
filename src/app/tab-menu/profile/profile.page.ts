@@ -21,10 +21,11 @@ export class ProfilePage {
     private modalCtrl: ModalController
   ) {}
 
-  ionViewWillEnter() {
-    const user = this.auth.getCurrentUser();
+  async ionViewWillEnter() {
+    const user = await this.auth.getCurrentUser();
     if (user) {
-      this.name = user.name || '';
+      // Use displayName if set, else fall back to email
+      this.name = user.displayName || user.email || '';
     } else {
       this.router.navigate(['/login']);
     }
@@ -42,7 +43,7 @@ export class ProfilePage {
 
   if (data && data.newName) {
     this.name = data.newName;
-    this.auth.updateName(data.newName);
+    await this.auth.updateName(data.newName);
     alert('Profile updated!');
   }
 }
@@ -56,8 +57,8 @@ export class ProfilePage {
   await modal.present();
 }
 
-  onLogout() {
-    this.auth.logout();
+  async onLogout() {
+    await this.auth.logout();
     this.router.navigate(['/login']);
   }
 }

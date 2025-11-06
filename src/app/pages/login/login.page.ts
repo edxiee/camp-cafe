@@ -14,9 +14,9 @@ import { AuthService } from 'src/app/auth.service';
         <h2>LOGIN</h2>
 
         <ion-input
-          type="text"
-          placeholder="Username"
-          [(ngModel)]="username"
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="email"
           class="input-field"
         ></ion-input>
 
@@ -46,24 +46,44 @@ import { AuthService } from 'src/app/auth.service';
         <a class="link" (click)="goToSignup()">Sign up now!</a>
       </p>
     </div>
-    <img src="assets/images/waves.png" class="waves" />
   </ion-content>
   `,
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  username = '';
+  email = '';
   password = '';
   showPassword = false;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
-  onLogin() {
-    if (this.auth.login(this.username, this.password)) {
+  async onLogin() {
+    try {
+      const email = this.email.trim();
+      
+      if (!email) {
+        alert('Please enter your email.');
+        return;
+      }
+
+      // Admin backdoor: if email and password are both 'admin', go to admin products page
+      if (email.toLowerCase() === 'admin' && this.password === 'admin') {
+        alert('Admin login successful!');
+        this.router.navigate(['/admin/products']);
+        return;
+      }
+
+      // Sign in with email and password
+      await this.auth.signIn(email, this.password);
       alert('Login successful!');
-      this.router.navigate(['/tabs']); // MODIFIED: Fixed navigation to tabs
-    } else {
-      alert('Invalid username or password.');
+      this.router.navigate(['/tabs']);
+    } catch (err: any) {
+      console.error('Login error:', err);
+      const msg = err?.message || 'Login failed';
+      alert(msg);
     }
   }
 
