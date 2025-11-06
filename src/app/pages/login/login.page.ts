@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [IonicModule, FormsModule, CommonModule],
+  standalone: false,
   template: `
   <ion-content>
     <div class="container">
@@ -74,5 +70,3 @@ export class LoginPage {
     this.router.navigate(['/signup']);
   }
 }
-
-export class LoginPageModule {}
