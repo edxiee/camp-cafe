@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { ModalController, IonicModule } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'aboutApp-modal',
+  standalone: false,
   template: `
     <ion-header>
     <ion-toolbar>
@@ -27,8 +26,7 @@ import { FormsModule } from '@angular/forms';
   </div>
 </ion-content>
   `,
-  standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  
   styleUrls: ['./aboutApp.modal.scss'],
 })
 
