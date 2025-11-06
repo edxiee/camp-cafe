@@ -20,11 +20,8 @@ const routes: Routes = [
     path: 'pages',
     loadChildren: () => import('./pages/pages.module').then( m => m.PagesPageModule)
   },
- 
-
-  
-
- 
+  // Fallback: any unknown route goes to login
+  { path: '**', redirectTo: 'login' },
 
 ];
 
