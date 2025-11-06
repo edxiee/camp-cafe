@@ -69,7 +69,8 @@ import { UserService } from 'src/app/user.service';
 
     <div class="bottom-text">
       Already have an account? 
-      <a href="/login" class="link" (click)="goToLogin()">Log In!</a>
+      <!-- MODIFIED: Changed from href to click handler -->
+      <a class="link" (click)="goToLogin()">Log In!</a>
     </div>
   </div>
   
@@ -95,59 +96,47 @@ export class SignupPage {
   async onSignup() {
     if (this.isLoading) return;
     this.isLoading = true;
-    console.log('Signup button clicked!');
-    
-    const firstName = this.firstName?.trim();
-    const lastName = this.lastName?.trim();
-    const email = this.email?.trim();
-
-    if (!firstName || !lastName) {
-      alert('Please enter your first and last name.');
-      this.isLoading = false;
-      return;
-    }
-    if (!email) {
-      alert('Please enter your email.');
-      this.isLoading = false;
-      return;
-    }
-    if (this.password !== this.retypePassword) {
-      alert('Passwords do not match!');
-      this.isLoading = false;
-      return;
-    }
-
     try {
-      console.log('Creating Firebase Auth user...');
-      // Create Firebase Auth user
-      const result = await this.auth.signUp(email, this.password);
-      const uid = result.user?.uid;
-      console.log('Auth user created with UID:', uid);
+      const firstName = this.firstName?.trim();
+      const lastName = this.lastName?.trim();
+      const email = this.email?.trim();
 
-      if (uid) {
-        console.log('Setting display name...');
-        // Set display name
-        await this.auth.updateName(`${firstName} ${lastName}`);
-        console.log('Display name set successfully');
-
-        console.log('Creating Firestore profile...');
-        // Store user profile in Firestore (no username needed)
-        await this.userService.createUserProfile(uid, {
-          email,
-          username: email, // Use email as username for backwards compatibility
-          firstName,
-          lastName,
-        });
-        console.log('Firestore profile created successfully!');
-
-        alert('Signup successful!');
-        this.router.navigate(['/login']);
-      } else {
-        console.error('No UID returned from signup');
-        alert('Signup failed: No user ID returned');
+      if (!firstName || !lastName) {
+        alert('Please enter your first and last name.');
+        return;
       }
+      if (!email) {
+        alert('Please enter your email.');
+        return;
+      }
+      if (!this.password) {
+        alert('Please enter your password.');
+        return;
+      }
+      if (this.password !== this.retypePassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      // Sign up in Firebase Auth
+      const cred = await this.auth.signUp(email, this.password);
+      const uid = cred.user?.uid;
+      if (!uid) {
+        throw new Error('Signup failed: No user ID returned');
+      }
+
+      // Create user profile in Firestore
+      const username = (email.split('@')[0] || '').toLowerCase();
+      await this.userService.createUserProfile(uid, {
+        email,
+        username,
+        firstName,
+        lastName,
+      });
+
+      alert('Signup successful!');
+      this.router.navigate(['/login']);
     } catch (err: any) {
-      // Common Firebase codes: auth/email-already-in-use, auth/invalid-email, auth/weak-password
       console.error('Signup error:', err);
       const msg = err?.message || 'Signup failed';
       alert(msg);
@@ -155,7 +144,6 @@ export class SignupPage {
       this.isLoading = false;
     }
   }
-  
   goToLogin() {
     this.router.navigate(['/login']);
   }

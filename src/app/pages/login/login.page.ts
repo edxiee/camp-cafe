@@ -42,7 +42,8 @@ import { AuthService } from 'src/app/auth.service';
 
       <p class="bottom-text">
         Not a member yet?
-        <a href="/signup" class="link" (click)="goToSignup()">Sign up now!</a>
+        <!-- MODIFIED: Changed from href to click handler -->
+        <a class="link" (click)="goToSignup()">Sign up now!</a>
       </p>
     </div>
   </ion-content>
@@ -87,6 +88,6 @@ export class LoginPage {
   }
 
   goToSignup() {
-    this.router.navigate(['/signup']);
+    this.router.navigate(['/signup']); // MODIFIED: Use router navigation
   }
 }
