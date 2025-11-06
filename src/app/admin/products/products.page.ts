@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Product, ProductService } from 'src/app/services/product.service';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-products',
@@ -28,7 +30,14 @@ export class ProductsPage implements OnInit {
   editSelectedImage: File | null = null;
   editImageUrl: string = '';
 
-  constructor(private productService: ProductService) { }
+  // Navigation state
+  selectedTab = 'products';
+
+  constructor(
+    private productService: ProductService,
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
     this.products$ = this.productService.getProducts();
@@ -185,6 +194,40 @@ export class ProductsPage implements OnInit {
       alert('Failed to delete product. Check console.');
     } finally {
       this.isSaving = false;
+    }
+  }
+
+  onTabChange(event: any) {
+    const tab = event.detail.value;
+    
+    if (tab === 'logout') {
+      this.logout();
+      return;
+    }
+
+    // Navigate to other admin pages when they're created
+    if (tab === 'users') {
+      alert('Users page coming soon!');
+      this.selectedTab = 'products'; // Reset to products
+    } else if (tab === 'transactions') {
+      alert('Transactions page coming soon!');
+      this.selectedTab = 'products'; // Reset to products
+    }
+  }
+
+  async logout() {
+    const confirmed = confirm('Are you sure you want to logout?');
+    if (!confirmed) {
+      this.selectedTab = 'products'; // Reset to products
+      return;
+    }
+
+    try {
+      await this.authService.logout();
+      this.router.navigate(['/login']);
+    } catch (e) {
+      console.error('Logout error:', e);
+      alert('Logout failed. Check console.');
     }
   }
 
