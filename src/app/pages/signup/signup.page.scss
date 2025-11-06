@@ -12,20 +12,23 @@ ion-content {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  flex: 1;
   padding: 20px;
   z-index: 2;
+  margin-top: 3rem;
 }
 
 .logo {
   width: 140px;
-  margin-bottom: 25px;
+  margin: 25px auto;
+  display: block;
 }
 
-.login-box {
+.form-container {
   background: #ffffff;
   border: 1px solid #222;
   border-radius: 8px;
+  margin: auto;
   padding: 25px;
   width: 90%;
   max-width: 360px;
@@ -39,18 +42,27 @@ h2 {
   font-size: 20px;
 }
 
-.input-field {
+ion-item {
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
   --padding-start: 10px;
 }
 
-.signin-btn {
+.signup-btn {
   --background: #c79c5a;
   color: white;
   font-weight: bold;
   margin-top: 10px;
+}
+
+.input-field {
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  --padding-start: 10px;
+  color: black;
+  text-align: left;
 }
 
 .options {
@@ -59,12 +71,6 @@ h2 {
   align-items: center;
   margin-top: 12px;
   font-size: 13px;
-}
-
-.left {
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }
 
 .forgot {
@@ -77,6 +83,7 @@ h2 {
   font-size: 14px;
   margin-top: 25px;
   color: #000;
+  text-align: center;
 }
 
 .link {

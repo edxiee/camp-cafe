@@ -1,0 +1,32 @@
+ion-toolbar {
+  --background: #5c4033; /* Coffee brown */
+  --color: #fff;
+}
+
+.about-container {
+  background-color: #d7b89c; /* Latte brown */
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  margin: 20px auto;
+  max-width: 95%;
+  color: #3b2f2f;
+}
+
+h1 {
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0 5px;
+  display: block;
+  padding-top: 2em;
+}
+
+.about-container p {
+  line-height: 1.6;
+  font-size: 1rem;
+  text-align: justify;
+}
+
+ion-button {
+  color: #fff;
+}
