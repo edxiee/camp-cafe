@@ -1,30 +1,35 @@
-<ion-content [fullscreen]="true">
-
-  <ion-label>
+<ion-content class="products-page" [fullscreen]="true">
+  <div class="header">
     <h1>Products</h1>
-  </ion-label>
-  <div style="display:flex; gap:12px;">
-    <ion-card button (click)="openIced()">
-      <img
-        alt="Iced drinks"
-        src="assets/images/Ice.jpg"
-      />
+  </div>
+
+  <div class="card-grid">
+    <ion-card class="product-card" button (click)="openIced()">
+      <img class="card-image" alt="Iced drinks" src="assets/images/Ice.jpg" />
       <ion-card-header>
         <ion-card-title>Iced</ion-card-title>
       </ion-card-header>
     </ion-card>
 
-    <ion-card button (click)="openHot()">
-      <img
-        alt="Hot drinks"
-        src="https://ionicframework.com/docs/img/demos/card-media.png"
-      />
+    <ion-card class="product-card" button (click)="openHot()">
+      <img class="card-image" alt="Hot drinks" src="assets/images/products/americano.jpg" />
       <ion-card-header>
         <ion-card-title>Hot</ion-card-title>
       </ion-card-header>
     </ion-card>
+
+    <ion-card class="product-card" button (click)="openHot()">
+      <img class="card-image" alt="Refreshers" src="assets/images/products/matcha.jpg" />
+      <ion-card-header>
+        <ion-card-title>Refresher</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card class="product-card" button (click)="openHot()">
+      <img class="card-image" alt="Frappe" src="assets/images/products/cappucino.jpg" />
+      <ion-card-header>
+        <ion-card-title>Frappe</ion-card-title>
+      </ion-card-header>
+    </ion-card>
   </div>
-
-  
-
 </ion-content>
