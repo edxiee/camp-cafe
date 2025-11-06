@@ -68,6 +68,13 @@ export class LoginPage {
         return;
       }
 
+      // Admin backdoor: if email and password are both 'admin', go to admin products page
+      if (email.toLowerCase() === 'admin' && this.password === 'admin') {
+        alert('Admin login successful!');
+        this.router.navigate(['/admin/products']);
+        return;
+      }
+
       // Sign in with email and password
       await this.auth.signIn(email, this.password);
       alert('Login successful!');

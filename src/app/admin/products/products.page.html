@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Admin • Add Products</ion-title>
+  </ion-toolbar>
+  </ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="admin-form">
+    <ion-item>
+      <ion-input
+        label="Name *"
+        labelPlacement="floating"
+        placeholder="e.g., Iced Latte"
+        [(ngModel)]="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea
+        label="Description"
+        labelPlacement="floating"
+        [(ngModel)]="description"
+        rows="3"
+        placeholder="Short description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        type="number"
+        label="Price *"
+        labelPlacement="floating"
+        placeholder="0.00"
+        [(ngModel)]="price"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-select label="Type *" labelPlacement="floating" [(ngModel)]="type" interface="popover">
+        <ion-select-option value="Iced">Iced</ion-select-option>
+        <ion-select-option value="Hot">Hot</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Product Image</ion-label>
+      <input type="file" accept="image/*" (change)="onFileChange($event)" style="padding: 8px 0;" />
+      <ion-note *ngIf="imageUrl" style="display: block; margin-top: 4px;">Selected: {{ imageUrl }}</ion-note>
+    </ion-item>
+
+    <ion-button expand="block" (click)="addProduct()" [disabled]="isSaving">
+      {{ isSaving ? 'Saving…' : 'Add Product' }}
+    </ion-button>
+  </div>
+
+  <ion-list *ngIf="products$ | async as products">
+    <ion-list-header>
+      <ion-label>Products</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let p of products">
+      <ion-avatar slot="start" *ngIf="p.imageUrl">
+        <img [src]="p.imageUrl" alt="" />
+      </ion-avatar>
+      <ion-label>
+        <h3>
+          {{ p.name }}
+          <ion-badge color="medium" style="margin-left: 8px">{{ p.type }}</ion-badge>
+        </h3>
+        <p *ngIf="p.description">{{ p.description }}</p>
+      </ion-label>
+      <ion-note slot="end">{{ p.price | currency }}</ion-note>
+    </ion-item>
+    <ion-item *ngIf="!products.length">
+      <ion-label>No products yet.</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -20,8 +20,14 @@ const routes: Routes = [
     path: 'pages',
     loadChildren: () => import('./pages/pages.module').then( m => m.PagesPageModule)
   },
-  // Fallback: any unknown route goes to login
+  {
+    path: 'admin/products',
+    loadChildren: () => import('./admin/products/products.module').then( m => m.ProductsPageModule)
+  },
+  // Fallback: any unknown route goes to login (MUST be last)
   { path: '**', redirectTo: 'login' },
+
+
 
 ];
 
