@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 
+//rentoy comment
+
 @Component({
   selector: 'app-signup',
   standalone: true,
