@@ -14,8 +14,8 @@ import { ModalController } from '@ionic/angular';
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <h1>Camp Café</h1>
+<ion-content class="ion-padding modal-content">
+  <h1 style="color: black;">Camp Café</h1>
   <div class="about-container">
     <p>
       <b>Camp Café</b> is a mobile app that lets users <b>pre-order their favorite drinks </b>easily. 
