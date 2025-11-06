@@ -10,6 +10,7 @@ import { Product, ProductService } from '../../../services/product.service';
   selector: 'app-iced',
   templateUrl: './iced.page.html',
   styleUrls: ['./iced.page.scss'],
+  // Implemented as a standalone component so it can be imported by the module/router.
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
