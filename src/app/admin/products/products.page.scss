@@ -1,0 +1,12 @@
+/* Small preview thumbnail for selected image */
+.preview {
+	padding: 8px 16px;
+}
+
+.preview img {
+	width: 72px;
+	height: 72px;
+	object-fit: cover;
+	border-radius: 8px;
+	display: block;
+}

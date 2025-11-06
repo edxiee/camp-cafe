@@ -1,17 +1,30 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      ProductsPage
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Products</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
- 
+  <ion-label>
+    <h1>Products</h1>
+  </ion-label>
+  <div style="display:flex; gap:12px;">
+    <ion-card button (click)="openIced()">
+      <img
+        alt="Iced drinks"
+        src="assets/images/Ice.jpg"
+      />
+      <ion-card-header>
+        <ion-card-title>Iced</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card button (click)="openHot()">
+      <img
+        alt="Hot drinks"
+        src="https://ionicframework.com/docs/img/demos/card-media.png"
+      />
+      <ion-card-header>
+        <ion-card-title>Hot</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  </div>
+
+  
+
 </ion-content>

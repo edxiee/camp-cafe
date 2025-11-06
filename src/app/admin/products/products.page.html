@@ -1,0 +1,153 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Admin Panel</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment scrollable="true" [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)">
+      <ion-segment-button value="products">
+        <ion-label>Products</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="users">
+        <ion-label>Users</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="transactions">
+        <ion-label>Transactions</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="logout">
+        <ion-label>Logout</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="admin-form">
+    <ion-item>
+      <ion-input
+        label="Name *"
+        labelPlacement="floating"
+        placeholder="e.g., Iced Latte"
+        [(ngModel)]="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea
+        label="Description"
+        labelPlacement="floating"
+        [(ngModel)]="description"
+        rows="3"
+        placeholder="Short description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        type="number"
+        label="Price *"
+        labelPlacement="floating"
+        placeholder="0.00"
+        [(ngModel)]="price"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-select label="Type *" labelPlacement="floating" [(ngModel)]="type" interface="popover">
+        <ion-select-option value="Iced">Iced</ion-select-option>
+        <ion-select-option value="Hot">Hot</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Product Image</ion-label>
+      <input type="file" accept="image/*" (change)="onFileChange($event)" style="padding: 8px 0;" />
+      <ion-note *ngIf="imageUrl" style="display: block; margin-top: 4px;">Selected: {{ imageUrl }}</ion-note>
+    </ion-item>
+
+    <ion-button expand="block" (click)="addProduct()" [disabled]="isSaving">
+      {{ isSaving ? 'Saving…' : 'Add Product' }}
+    </ion-button>
+  </div>
+
+  <ion-list *ngIf="products$ | async as products">
+    <ion-list-header>
+      <ion-label>Products (tap to edit)</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let p of products" button (click)="openEditModal(p)">
+      <ion-avatar slot="start" *ngIf="p.imageUrl">
+        <img [src]="p.imageUrl" alt="" />
+      </ion-avatar>
+      <ion-label>
+        <h3>
+          {{ p.name }}
+          <ion-badge color="medium" style="margin-left: 8px">{{ p.type }}</ion-badge>
+        </h3>
+        <p *ngIf="p.description">{{ p.description }}</p>
+      </ion-label>
+      <ion-note slot="end">{{ p.price | currency }}</ion-note>
+    </ion-item>
+    <ion-item *ngIf="!products.length">
+      <ion-label>No products yet.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Edit Modal -->
+  <ion-modal [isOpen]="isEditModalOpen" (didDismiss)="closeEditModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Edit Product</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeEditModal()">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div style="padding: 16px;">
+          <ion-item>
+            <ion-input
+              label="Name *"
+              labelPlacement="floating"
+              [(ngModel)]="editName"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-textarea
+              label="Description"
+              labelPlacement="floating"
+              [(ngModel)]="editDescription"
+              rows="3"></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-input
+              type="number"
+              label="Price *"
+              labelPlacement="floating"
+              [(ngModel)]="editPrice"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Type *" labelPlacement="floating" [(ngModel)]="editType">
+              <ion-select-option value="Iced">Iced</ion-select-option>
+              <ion-select-option value="Hot">Hot</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Product Image (optional: upload new)</ion-label>
+            <input type="file" accept="image/*" (change)="onEditFileChange($event)" style="padding: 8px 0;" />
+            <ion-note *ngIf="editImageUrl" style="display: block; margin-top: 4px;">
+              {{ editSelectedImage ? 'New: ' + editImageUrl : 'Current image set' }}
+            </ion-note>
+          </ion-item>
+
+          <ion-button expand="block" color="primary" (click)="saveEdit()" [disabled]="isSaving" style="margin-top: 16px;">
+            {{ isSaving ? 'Saving…' : 'Save Changes' }}
+          </ion-button>
+
+          <ion-button expand="block" color="danger" (click)="deleteProduct()" [disabled]="isSaving">
+            {{ isSaving ? 'Deleting…' : 'Delete Product' }}
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
