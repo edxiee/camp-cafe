@@ -1,17 +1,72 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      CartPage
-    </ion-title>
+    <div class="header-content">
+      <ion-buttons slot="start">
+        <ion-button fill="clear" (click)="goBackToProducts()">
+          <ion-icon name="chevron-back" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>My Cart ({{totalItems}})</ion-title>
+      <ion-buttons slot="end">
+        <ion-button fill="clear">Edit</ion-button>
+      </ion-buttons>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Cart</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="cart-container">
+    <!-- Cart Items -->
+    <div class="cart-item" *ngFor="let item of cartItems">
+      <div class="item-content">
+        <!-- Column 1: Photo -->
+        <div class="item-image">
+          <img [src]="item.image" [alt]="item.name">
+        </div>
+        
+        <!-- Column 2: Product Details -->
+        <div class="item-details">
+          <h3 class="item-name">{{item.name}}</h3>
+          <p class="item-category">{{item.category}}</p>
+          <p class="item-price">P{{item.price * item.quantity | number:'1.2-2'}}</p>
+        </div>
+        
+        <!-- Column 3: Quantity Controls -->
+        <div class="quantity-section">
+          <div class="quantity-oblong">
+            <button class="quantity-btn minus" (click)="decreaseQuantity(item)">-</button>
+            <span class="quantity-number">{{item.quantity}}</span>
+            <button class="quantity-btn plus" (click)="increaseQuantity(item)">+</button>
+          </div>
+        </div>
+      </div>
 
-  <app-explore-container name="Cart page ni ewan din"></app-explore-container>
+      <!-- Actions Row -->
+      <div class="item-actions">
+        <button class="action-btn favorite" (click)="toggleFavorite(item)">
+          <ion-icon [name]="item.isFavorite ? 'heart' : 'heart-outline'"></ion-icon>
+          {{item.isFavorite ? 'Added to Favorites' : 'Add to Favorites'}}
+        </button>
+        <button class="action-btn delete" (click)="removeItem(item.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Total and Checkout - MODIFIED: 2-column layout -->
+  <div class="checkout-section">
+    <div class="checkout-content">
+      <div class="total-section">
+        <span class="total-label">Total:</span>
+        <span class="total-price">P{{totalPrice | number:'1.2-2'}}</span>
+      </div>
+      <div class="button-section">
+        <ion-button expand="block" class="checkout-btn" (click)="checkout()">
+          Checkout
+        </ion-button>
+      </div>
+    </div>
+  </div>
 </ion-content>

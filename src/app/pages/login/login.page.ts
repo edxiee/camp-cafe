@@ -42,7 +42,8 @@ import { AuthService } from 'src/app/auth.service';
 
       <p class="bottom-text">
         Not a member yet?
-        <a href="/signup" class="link" (click)="goToSignup()">Sign up now!</a>
+        <!-- MODIFIED: Changed from href to click handler -->
+        <a class="link" (click)="goToSignup()">Sign up now!</a>
       </p>
     </div>
     <img src="assets/images/waves.png" class="waves" />
@@ -58,15 +59,15 @@ export class LoginPage {
   constructor(private auth: AuthService, private router: Router) {}
 
   onLogin() {
-  if (this.auth.login(this.username, this.password)) {
-    alert('Login successful!');
-    this.router.navigate(['/tabs']);
-  } else {
-    alert('Invalid username or password.');
+    if (this.auth.login(this.username, this.password)) {
+      alert('Login successful!');
+      this.router.navigate(['/tabs']); // MODIFIED: Fixed navigation to tabs
+    } else {
+      alert('Invalid username or password.');
+    }
   }
-}
 
   goToSignup() {
-    this.router.navigate(['/signup']);
+    this.router.navigate(['/signup']); // MODIFIED: Use router navigation
   }
 }

@@ -1,0 +1,314 @@
+// Force light theme background
+ion-content {
+  --background: #ffffff !important;
+  background: #ffffff !important;
+}
+
+.cart-container {
+  padding: 16px;
+  background: #ffffff;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+ion-toolbar {
+  --background: #ffffff !important;
+  --color: #000000 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+ion-title {
+  font-weight: 600;
+  color: #000000 !important;
+}
+
+.cart-item {
+  background: #ffffff !important;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.item-content {
+  display: flex;
+  align-items: center; /* center vertically */
+  gap: 16px;
+}
+
+.item-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f8f8f8;
+  display: flex; /* center image */
+  align-items: center; /* center image */
+  justify-content: center; /* center image */
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.item-details {
+  flex: 1;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center; 
+}
+
+.name-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  margin-bottom: 4px;
+}
+
+.item-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c2c2c;
+  flex: 1;
+}
+
+.quantity-oblong {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f8f8f8;
+  border-radius: 20px;
+  padding: 4px 8px;
+  min-width: 40px;
+  border: 1px solid #e0e0e0;
+  justify-content: center; 
+  height: fit-content; 
+}
+
+.quantity-btn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+  padding: 2px 8px;
+  width: 100%;
+  text-align: center;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  min-height: 20px; 
+  
+  &:hover {
+    background: #e0e0e0;
+    border-radius: 4px;
+  }
+  
+  &.minus {
+    order: 1;
+  }
+  
+  &.plus {
+    order: 3;
+  }
+}
+
+.quantity-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000000;
+  padding: 2px 0;
+  order: 2;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  min-height: 20px; 
+}
+
+.item-category {
+  margin: 0 0 4px 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.item-price {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #c79c5a;
+}
+
+.item-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  
+  &:hover {
+    background: #f5f5f5;
+  }
+  
+  &.favorite {
+    color: #ff4757;
+    
+    ion-icon {
+      color: #ff4757;
+    }
+  }
+  
+  &.delete {
+    color: #666;
+    
+    ion-icon {
+      color: #666;
+    }
+  }
+  
+  ion-icon {
+    font-size: 14px;
+  }
+}
+
+.checkout-section {
+  padding: 20px 16px;
+  background: #ffffff !important;
+  border-top: 1px solid #e0e0e0;
+  position: sticky;
+  bottom: 0;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  
+  .total-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+  }
+  
+  .total-price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #c79c5a;
+  }
+}
+
+.checkout-btn {
+  --background: #c79c5a !important;
+  --background-activated: #b38a4a !important;
+  --background-hover: #b38a4a !important;
+  --color: #ffffff !important;
+  --border-radius: 8px;
+  --box-shadow: 0 2px 8px rgba(199, 156, 90, 0.3);
+  font-weight: 600;
+  height: 50px;
+  font-size: 16px;
+}
+
+// Remove any dark theme overrides
+@media (prefers-color-scheme: dark) {
+  ion-content {
+    --background: #ffffff !important;
+    background: #ffffff !important;
+  }
+  
+  .cart-item {
+    background: #ffffff !important;
+  }
+}
+
+// Checkout Button
+.checkout-section {
+  padding: 20px 16px;
+  background: #ffffff !important;
+  border-top: 1px solid #e0e0e0;
+  position: sticky;
+  bottom: 0;
+}
+
+.checkout-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.total-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.total-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 4px;
+}
+
+.total-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #c79c5a;
+}
+
+.button-section {
+  flex: 1;
+  max-width: 150px;
+}
+
+.checkout-btn {
+  --background: #c79c5a !important;
+  --background-activated: #b38a4a !important;
+  --background-hover: #b38a4a !important;
+  --color: #ffffff !important;
+  --border-radius: 8px;
+  --box-shadow: 0 2px 8px rgba(199, 156, 90, 0.3);
+  font-weight: 600;
+  height: 30px;
+  width: 150px;
+  font-size: 16px;
+  margin: 0;
+}
+
+// Remove any dark theme overrides
+@media (prefers-color-scheme: dark) {
+  ion-content {
+    --background: #ffffff !important;
+    background: #ffffff !important;
+  }
+  
+  .cart-item {
+    background: #ffffff !important;
+  }
+}

@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 
-//rentoy comment
-
 @Component({
   selector: 'app-signup',
   standalone: false,
@@ -52,7 +50,8 @@ import { AuthService } from 'src/app/auth.service';
 
     <div class="bottom-text">
       Already have an account? 
-      <a href="/login" class="link" (click)="goToLogin()">Log In!</a>
+      <!-- MODIFIED: Changed from href to click handler -->
+      <a class="link" (click)="goToLogin()">Log In!</a>
     </div>
   </div>
   <img src="assets/images/waves.png" class="waves" />
@@ -69,19 +68,20 @@ export class SignupPage {
   constructor(private auth: AuthService, private router: Router) {}
 
   onSignup() {
-  if (this.password !== this.retypePassword) {
-    alert('Passwords do not match!');
-    return;
+    if (this.password !== this.retypePassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+
+    const success = this.auth.signup(this.username, this.password);
+    if (success) {
+      alert('Signup successful!');
+      this.router.navigate(['/login']);
+    } else {
+      alert('Username already exists!');
+    }
   }
 
-  const success = this.auth.signup(this.username, this.password);
-  if (success) {
-    alert('Signup successful!');
-    this.router.navigate(['/login']);
-  } else {
-    alert('Username already exists!');
-  }
-}
   goToLogin() {
     this.router.navigate(['/login']);
   }
