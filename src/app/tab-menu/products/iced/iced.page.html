@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Iced Drinks</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="products$ | async as products">
+    <ion-item *ngFor="let p of products">
+      <ion-avatar slot="start" *ngIf="p.imageUrl">
+        <img [src]="p.imageUrl" />
+      </ion-avatar>
+      <ion-label>
+        <h3>{{ p.name }}</h3>
+        <p *ngIf="p.description">{{ p.description }}</p>
+      </ion-label>
+      <ion-note slot="end">{{ p.price | currency }}</ion-note>
+    </ion-item>
+    <ion-item *ngIf="!products.length">
+      <ion-label>No iced drinks yet.</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
