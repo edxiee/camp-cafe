@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 export interface Product {
@@ -42,5 +42,15 @@ export class ProductService {
       reader.onload = () => resolve(reader.result as string);
       reader.onerror = error => reject(error);
     });
+  }
+
+  async updateProduct(id: string, data: Partial<Omit<Product, 'id' | 'createdAt'>>) {
+    const productRef = doc(this.firestore, 'products', id);
+    return updateDoc(productRef, data as any);
+  }
+
+  async deleteProduct(id: string) {
+    const productRef = doc(this.firestore, 'products', id);
+    return deleteDoc(productRef);
   }
 }
