@@ -61,7 +61,121 @@
       <ion-note color="medium" style="display:block;margin-top:4px;">This creates a record in users with role: admin.</ion-note>
     </div>
 
-    <!-- Placeholder for future list -->
-    <p class="hint">Coming soon: Admin list and management tools.</p>
+    <!-- Admin list -->
+    <ion-list *ngIf="admins$ | async as admins">
+      <ion-item *ngFor="let a of admins" button (click)="openEditAdmin(a)">
+        <ion-label>
+          <h3>{{ a.username || '(no username)' }}</h3>
+          <p>{{ a.email }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item *ngIf="!admins.length">
+        <ion-label>No admins yet.</ion-label>
+      </ion-item>
+    </ion-list>
   </div>
+
+  <!-- Edit Admin Modal -->
+  <ion-modal [isOpen]="isEditOpen" (didDismiss)="closeEditAdmin()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Edit Admin</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeEditAdmin()">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div style="padding: 16px;">
+          <ion-item>
+            <ion-input
+              label="Username *"
+              labelPlacement="floating"
+              [(ngModel)]="editUsername"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input
+              label="Email"
+              labelPlacement="floating"
+              [readonly]="true"
+              [(ngModel)]="editEmail"></ion-input>
+          </ion-item>
+          <ion-note color="medium" style="display:block;margin:6px 0 12px;">
+            Email & password changes require a secure admin backend. You can send a password reset.
+          </ion-note>
+
+          <ion-button expand="block" color="primary" (click)="saveAdmin()" [disabled]="isSaving">
+            {{ isSaving ? 'Saving…' : 'Save' }}
+          </ion-button>
+          <ion-button expand="block" (click)="sendReset()">Send password reset</ion-button>
+          <ion-button expand="block" color="danger" (click)="deleteAdmin()" [disabled]="isSaving">
+            {{ isSaving ? 'Deleting…' : 'Delete Account' }}
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  
+  <!-- Users (normal) section -->
+  <div class="admin-users" style="margin-top: 16px;">
+    <div class="header">
+      <h2>Users</h2>
+    </div>
+    <ion-list *ngIf="users$ | async as users">
+      <ion-item *ngFor="let u of users" button (click)="openEditUser(u)">
+        <ion-label>
+          <h3>{{ u.username || '(no username)' }}</h3>
+          <p>{{ u.email }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item *ngIf="!users.length">
+        <ion-label>No users found.</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Edit User Modal -->
+  <ion-modal [isOpen]="isUserEditOpen" (didDismiss)="closeEditUser()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Edit User</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeEditUser()">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div style="padding: 16px;">
+          <ion-item>
+            <ion-input
+              label="Username *"
+              labelPlacement="floating"
+              [(ngModel)]="userEditUsername"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input
+              label="Email"
+              labelPlacement="floating"
+              [readonly]="true"
+              [(ngModel)]="userEditEmail"></ion-input>
+          </ion-item>
+          <ion-note color="medium" style="display:block;margin:6px 0 12px;">
+            Email & password changes require a secure admin backend. You can send a password reset.
+          </ion-note>
+
+          <ion-button expand="block" color="primary" (click)="saveUser()" [disabled]="isSaving">
+            {{ isSaving ? 'Saving…' : 'Save' }}
+          </ion-button>
+          <ion-button expand="block" (click)="sendUserReset()">Send password reset</ion-button>
+          <ion-button expand="block" color="danger" (click)="deleteUser()" [disabled]="isSaving">
+            {{ isSaving ? 'Deleting…' : 'Delete User' }}
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

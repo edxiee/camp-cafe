@@ -1,5 +1,10 @@
 .admin-users {
 	padding: 16px;
+	/* Add a subtle border around the Admin Users container */
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	border-radius: 12px;
+	margin: 16px;
+	background: var(--ion-background-color, #fff);
 }
 
 .admin-users .header {
