@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Admin Panel</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment scrollable="true" [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)">
+      <ion-segment-button value="products">
+        <ion-label>Products</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="users">
+        <ion-label>Users</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="transactions">
+        <ion-label>Transactions</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="logout">
+        <ion-label>Logout</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="users-wrapper">
+    <h2>Users</h2>
+    <p>Coming soon: List of registered users, roles and management tools.</p>
+  </div>
+</ion-content>

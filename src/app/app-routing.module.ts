@@ -30,8 +30,13 @@ const routes: Routes = [
     path: 'admin/products',
     loadChildren: () => import('./admin/products/products.module').then( m => m.ProductsPageModule)
   },
+  {
+    path: 'admin/users',
+    loadChildren: () => import('./admin/users/users.module').then( m => m.UsersPageModule)
+  },
   // Fallback: any unknown route goes to login (MUST be last)
   { path: '**', redirectTo: 'login' },
+
  
 
 
