@@ -66,7 +66,13 @@ export class ProductService {
           const isPng = (file.type || '').toLowerCase().includes('png');
           const mime = isPng ? 'image/png' : 'image/jpeg';
           const dataUrl = canvas.toDataURL(mime, isPng ? undefined : quality);
-          resolve(dataUrl);
+
+          // Check if the data URL is too long (e.g., > 500KB to stay under Firestore limits)
+          if (dataUrl.length > 500 * 1024) {
+            reject(new Error('Image is too large after compression. Please choose a smaller image.'));
+          } else {
+            resolve(dataUrl);
+          }
         };
         img.onerror = err => reject(err);
         img.src = reader.result as string;

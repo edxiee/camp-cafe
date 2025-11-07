@@ -102,7 +102,12 @@ export class ProductsPage implements OnInit {
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedImage = input.files[0];
+      const file = input.files[0];
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        alert('Image file is too large. Please choose an image smaller than 5MB.');
+        return;
+      }
+      this.selectedImage = file;
       // Store filename for display
       this.imageUrl = this.selectedImage.name;
     }
@@ -111,7 +116,12 @@ export class ProductsPage implements OnInit {
   onEditFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.editSelectedImage = input.files[0];
+      const file = input.files[0];
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        alert('Image file is too large. Please choose an image smaller than 5MB.');
+        return;
+      }
+      this.editSelectedImage = file;
       this.editImageUrl = this.editSelectedImage.name;
     }
   }
