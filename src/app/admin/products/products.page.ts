@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Product, ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/auth.service';
 
@@ -14,9 +15,12 @@ export class ProductsPage implements OnInit {
   name = '';
   description = '';
   price: number | null = null;
-  type: 'Iced' | 'Hot' | '' = '';
+  type: 'Iced' | 'Hot' | 'Refreshers' | 'Frappe' | 'Non-Caffeinated' | '' = '';
   isSaving = false;
   products$!: Observable<Product[]>;
+  filteredProducts$!: Observable<Product[]>;
+  selectedType: 'All' | 'Iced' | 'Hot' | 'Refreshers' | 'Frappe' | 'Non-Caffeinated' = 'All';
+  private selectedType$ = new BehaviorSubject<'All' | 'Iced' | 'Hot' | 'Refreshers' | 'Frappe' | 'Non-Caffeinated'>('All');
   selectedImage: File | null = null;
   imageUrl: string = '';
 
@@ -26,7 +30,7 @@ export class ProductsPage implements OnInit {
   editName = '';
   editDescription = '';
   editPrice: number | null = null;
-  editType: 'Iced' | 'Hot' | '' = '';
+  editType: 'Iced' | 'Hot' | 'Refreshers' | 'Frappe' | 'Non-Caffeinated' | '' = '';
   editSelectedImage: File | null = null;
   editImageUrl: string = '';
 
@@ -41,6 +45,9 @@ export class ProductsPage implements OnInit {
 
   ngOnInit() {
     this.products$ = this.productService.getProducts();
+    this.filteredProducts$ = combineLatest([this.products$, this.selectedType$]).pipe(
+      map(([list, type]) => type === 'All' ? list : list.filter(p => p.type === type))
+    );
   }
 
   async addProduct() {
@@ -58,12 +65,12 @@ export class ProductsPage implements OnInit {
         ]) as Promise<T>;
       };
 
-      // If user selected a file, upload it and get the URL
+      // If user selected a file, upload it to Storage and get the URL
       let finalImageUrl: string | undefined = undefined;
       if (this.selectedImage) {
         finalImageUrl = await withTimeout(
           this.productService.uploadProductImage(this.selectedImage),
-          30000,
+          45000,
           'Image upload'
         );
       }
@@ -147,11 +154,11 @@ export class ProductsPage implements OnInit {
 
       let finalImageUrl: string | undefined = this.editingProduct.imageUrl;
       
-      // If user selected a new image, upload it
+      // If user selected a new image, upload it to Storage
       if (this.editSelectedImage) {
         finalImageUrl = await withTimeout(
           this.productService.uploadProductImage(this.editSelectedImage),
-          30000,
+          45000,
           'Image upload'
         );
       }
@@ -160,7 +167,7 @@ export class ProductsPage implements OnInit {
         name: this.editName.trim(),
         description: this.editDescription?.trim() || '',
         price: Number(this.editPrice),
-        type: this.editType as 'Iced' | 'Hot',
+        type: this.editType as 'Iced' | 'Hot' | 'Refreshers' | 'Frappe' | 'Non-Caffeinated',
         imageUrl: finalImageUrl,
       }), 20000, 'Update product');
 
@@ -173,6 +180,12 @@ export class ProductsPage implements OnInit {
     } finally {
       this.isSaving = false;
     }
+  }
+
+  onTypeChange(event: any) {
+    const v = event?.detail?.value as 'All' | 'Iced' | 'Hot' | 'Refreshers' | 'Frappe' | 'Non-Caffeinated';
+    this.selectedType = v;
+    this.selectedType$.next(v);
   }
 
   async deleteProduct() {

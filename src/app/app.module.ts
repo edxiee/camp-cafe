@@ -23,6 +23,7 @@ import { environment } from '../environments/environment';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+  // Storage not used (local image conversion); leaving commented for future use
   ],
   bootstrap: [AppComponent],
 })

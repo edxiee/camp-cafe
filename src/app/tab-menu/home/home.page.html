@@ -12,11 +12,11 @@
       <p>Discover your next favorite drink. Hot comforts or iced refreshers delivered with style.</p>
       <div class="hero-actions">
         <ion-button color="dark" fill="solid" (click)="navigateToProducts()">Browse Menu</ion-button>
-        <ion-button color="medium" fill="outline" (click)="navigateToCategory('ice')">Iced Drinks</ion-button>
+  <ion-button color="medium" fill="outline" (click)="navigateToCategory('iced')">Iced Drinks</ion-button>
       </div>
     </div>
     <div class="hero-art">
-      <img src="assets/images/waves.png" alt="cafe art" />
+      <img src="assets/logo.png" alt="cafe art" />
     </div>
   </section>
 
@@ -24,11 +24,20 @@
   <section class="quick-cats">
     <h2 class="section-title">Categories</h2>
     <div class="chips">
-      <ion-chip (click)="navigateToCategory('ice')">
+      <ion-chip (click)="navigateToCategory('iced')">
         <ion-label>Ice</ion-label>
       </ion-chip>
       <ion-chip (click)="navigateToCategory('hot')">
         <ion-label>Hot</ion-label>
+      </ion-chip>
+      <ion-chip (click)="navigateToCategory('refresher')">
+        <ion-label>Refreshers</ion-label>
+      </ion-chip>
+      <ion-chip (click)="navigateToCategory('frappe')">
+        <ion-label>Frappe</ion-label>
+      </ion-chip>
+      <ion-chip (click)="navigateToCategory('non-caffeinated')">
+        <ion-label>Non-Caffeinated</ion-label>
       </ion-chip>
       <ion-chip (click)="navigateToProducts()">
         <ion-label>All</ion-label>

@@ -52,6 +52,9 @@
       <ion-select label="Type *" labelPlacement="floating" [(ngModel)]="type" interface="popover">
         <ion-select-option value="Iced">Iced</ion-select-option>
         <ion-select-option value="Hot">Hot</ion-select-option>
+        <ion-select-option value="Refreshers">Refreshers</ion-select-option>
+        <ion-select-option value="Frappe">Frappe</ion-select-option>
+        <ion-select-option value="Non-Caffeinated">Non-Caffeinated</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -66,7 +69,19 @@
     </ion-button>
   </div>
 
-  <ion-list *ngIf="products$ | async as products">
+  <!-- Type filter tabs -->
+  <ion-toolbar>
+    <ion-segment scrollable="true" [(ngModel)]="selectedType" (ionChange)="onTypeChange($event)">
+      <ion-segment-button value="All"><ion-label>All</ion-label></ion-segment-button>
+      <ion-segment-button value="Iced"><ion-label>Iced</ion-label></ion-segment-button>
+      <ion-segment-button value="Hot"><ion-label>Hot</ion-label></ion-segment-button>
+      <ion-segment-button value="Refreshers"><ion-label>Refreshers</ion-label></ion-segment-button>
+      <ion-segment-button value="Frappe"><ion-label>Frappe</ion-label></ion-segment-button>
+      <ion-segment-button value="Non-Caffeinated"><ion-label>Non-Caffeinated</ion-label></ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-list *ngIf="filteredProducts$ | async as products">
     <ion-list-header>
       <ion-label>Products (tap to edit)</ion-label>
     </ion-list-header>
@@ -128,6 +143,9 @@
             <ion-select label="Type *" labelPlacement="floating" [(ngModel)]="editType">
               <ion-select-option value="Iced">Iced</ion-select-option>
               <ion-select-option value="Hot">Hot</ion-select-option>
+              <ion-select-option value="Refreshers">Refreshers</ion-select-option>
+              <ion-select-option value="Frappe">Frappe</ion-select-option>
+              <ion-select-option value="Non-Caffeinated">Non-Caffeinated</ion-select-option>
             </ion-select>
           </ion-item>
 
