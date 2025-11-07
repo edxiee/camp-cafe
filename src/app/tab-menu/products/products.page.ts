@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Product, ProductService } from '../../services/product.service';
@@ -26,7 +26,7 @@ export class ProductsPage {
   products$!: Observable<Product[]>;
   filteredProducts$!: Observable<Product[]>;
 
-  constructor(private router: Router, private productService: ProductService) {
+  constructor(private router: Router, private route: ActivatedRoute, private productService: ProductService) {
     this.products$ = this.productService.getProducts();
     this.filteredProducts$ = combineLatest([
       this.products$,
@@ -34,6 +34,16 @@ export class ProductsPage {
     ]).pipe(
       map(([items, cat]) => items.filter(p => this.matchesCategory(p, cat)))
     );
+
+    // React to query param changes to set the selected category (supports deep links and home shortcuts)
+    this.route.queryParamMap.subscribe(params => {
+      const cat = (params.get('category') || '').toLowerCase();
+      const allowed = this.categories.map(c => c.key);
+      if (allowed.includes(cat as any)) {
+        this.selectedCategory = cat as any;
+        this.selectedCategory$.next(this.selectedCategory);
+      }
+    });
   }
 
   onSegmentChanged(ev: CustomEvent) {

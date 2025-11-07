@@ -26,13 +26,9 @@ export class HomePage {
     this.router.navigate(['/tabs/products']);
   }
 
-  navigateToCategory(key: 'ice' | 'hot') {
-    if (key === 'ice') {
-      this.router.navigate(['/tabs/products/ice']);
-    } else {
-      // Hot page not yet split out; send to products root
-      this.router.navigate(['/tabs/products']);
-    }
+  navigateToCategory(key: 'iced' | 'hot' | 'refresher' | 'frappe' | 'non-caffeinated') {
+    // Route to products and pass the category as a query param; Products page will filter in realtime.
+    this.router.navigate(['/tabs/products'], { queryParams: { category: key } });
   }
 
 }

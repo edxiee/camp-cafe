@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EnvironmentInjector, runInInjectionContext } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
+import { Firestore, doc, getDoc, collection, query, where, getDocs } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -57,29 +58,74 @@ export class LoginPage {
 
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private firestore: Firestore,
+    private injector: EnvironmentInjector
   ) {}
 
   async onLogin() {
     try {
-      const email = this.email.trim();
+      const identifier = this.email.trim();
       
-      if (!email) {
+      if (!identifier) {
         alert('Please enter your email.');
         return;
       }
 
       // Admin backdoor: if email and password are both 'admin', go to admin products page
-      if (email.toLowerCase() === 'admin' && this.password === 'admin') {
+      if (identifier.toLowerCase() === 'admin' && this.password === 'admin') {
         alert('Admin login successful!');
         this.router.navigate(['/admin/products']);
         return;
       }
 
-      // Sign in with email and password
-      await this.auth.signIn(email, this.password);
+      // If identifier looks like a username (no @), try admin username login
+      if (!identifier.includes('@')) {
+        // Look up admin user by usernameLower in Firestore
+        const emailFromUsername = await runInInjectionContext(this.injector, async () => {
+          const ref = collection(this.firestore, 'users');
+          const q = query(ref, where('role', '==', 'admin'), where('usernameLower', '==', identifier.toLowerCase()));
+          const snap = await getDocs(q);
+          const first = snap.docs[0];
+          return first ? (first.data() as any)?.email : null;
+        });
+
+        if (!emailFromUsername) {
+          alert('Admin username not found.');
+          return;
+        }
+
+        const cred = await this.auth.signIn(emailFromUsername, this.password);
+        alert('Login successful!');
+        this.router.navigate(['/admin/products']);
+        return;
+      }
+
+      // Otherwise treat as email and sign in normally
+      const cred = await this.auth.signIn(identifier, this.password);
       alert('Login successful!');
-      this.router.navigate(['/tabs']);
+      // After login, check role from Firestore users/{uid}
+      const uid = cred.user?.uid;
+      if (!uid) {
+        this.router.navigate(['/tabs/home']);
+        return;
+      }
+
+      try {
+        const snap = await runInInjectionContext(this.injector, () => {
+          const ref = doc(this.firestore, 'users', uid);
+          return getDoc(ref);
+        });
+        const role = snap.exists() ? (snap.data() as any)?.role : undefined;
+        if (role === 'admin') {
+          this.router.navigate(['/admin/products']);
+        } else {
+          this.router.navigate(['/tabs/home']);
+        }
+      } catch (e) {
+        // If Firestore read fails, default to normal tabs/home
+        this.router.navigate(['/tabs/home']);
+      }
     } catch (err: any) {
       console.error('Login error:', err);
       const msg = err?.message || 'Login failed';
