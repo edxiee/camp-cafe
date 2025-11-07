@@ -21,8 +21,47 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="users-wrapper">
-    <h2>Users</h2>
-    <p>Coming soon: List of registered users, roles and management tools.</p>
+  <div class="admin-users">
+    <div class="header">
+      <h2>Admin Users</h2>
+      <span class="plus" role="button" aria-label="Add admin" (click)="toggleAddAdmin()">+</span>
+    </div>
+
+    <!-- Add Admin Container -->
+    <div class="add-admin-card" *ngIf="showAddAdmin">
+      <ion-item>
+        <ion-input
+          label="Username *"
+          labelPlacement="floating"
+          placeholder="e.g., John Doe"
+          [(ngModel)]="newAdminName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          type="email"
+          label="Email *"
+          labelPlacement="floating"
+          placeholder="admin@example.com"
+          [(ngModel)]="newAdminEmail"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          type="password"
+          label="Password *"
+          labelPlacement="floating"
+          placeholder="••••••"
+          [(ngModel)]="newAdminPassword"></ion-input>
+      </ion-item>
+      <div class="buttons">
+        <ion-button (click)="addAdmin()" [disabled]="isSaving" expand="block">
+          {{ isSaving ? 'Saving…' : 'Create Admin' }}
+        </ion-button>
+        <ion-button color="medium" fill="clear" (click)="toggleAddAdmin()">Cancel</ion-button>
+      </div>
+      <ion-note color="medium" style="display:block;margin-top:4px;">This creates a record in users with role: admin.</ion-note>
+    </div>
+
+    <!-- Placeholder for future list -->
+    <p class="hint">Coming soon: Admin list and management tools.</p>
   </div>
 </ion-content>

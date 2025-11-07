@@ -1,0 +1,47 @@
+.admin-users {
+	padding: 16px;
+}
+
+.admin-users .header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 8px;
+}
+
+.admin-users .header h2 {
+	margin: 0;
+	font-size: 20px;
+}
+
+.admin-users .header .plus {
+	font-size: 28px;
+	line-height: 1;
+	cursor: pointer;
+	user-select: none;
+	padding: 2px 6px;
+}
+
+.hint {
+	color: var(--ion-color-medium);
+	margin: 12px 0 0 0;
+}
+.add-admin-card {
+	margin: 16px;
+	padding: 16px;
+	background: var(--ion-color-light-contrast, #fff);
+	border-radius: 12px;
+	box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.add-admin-card h3 {
+	margin: 0 0 12px 0;
+	font-size: 18px;
+}
+
+.add-admin-card .buttons {
+	margin-top: 12px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
