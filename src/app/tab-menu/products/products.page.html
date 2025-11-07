@@ -1,30 +1,29 @@
-<ion-content [fullscreen]="true">
-
-  <ion-label>
+<ion-content class="products-page" [fullscreen]="true">
+  <div class="header">
     <h1>Products</h1>
-  </ion-label>
-  <div style="display:flex; gap:12px;">
-    <ion-card button (click)="openIced()">
-      <img
-        alt="Iced drinks"
-        src="assets/images/Ice.jpg"
-      />
-      <ion-card-header>
-        <ion-card-title>Iced</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-
-    <ion-card button (click)="openHot()">
-      <img
-        alt="Hot drinks"
-        src="https://ionicframework.com/docs/img/demos/card-media.png"
-      />
-      <ion-card-header>
-        <ion-card-title>Hot</ion-card-title>
-      </ion-card-header>
-    </ion-card>
   </div>
 
-  
+  <ion-segment class="category-segment" scrollable [value]="selectedCategory" (ionChange)="onSegmentChanged($event)">
+    <ion-segment-button *ngFor="let c of categories" [value]="c.key">
+      <ion-label>{{ c.label }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
+  <ng-container *ngIf="filteredProducts$ | async as products">
+    <div class="card-grid" *ngIf="products.length; else noItems">
+      <ion-card class="product-card" *ngFor="let p of products">
+        <img class="card-image" [alt]="p.name" [src]="p.imageUrl" *ngIf="p.imageUrl; else noImg" />
+        <ng-template #noImg>
+          <div class="no-image">No image</div>
+        </ng-template>
+        <ion-card-header>
+          <ion-card-title>{{ p.name }}</ion-card-title>
+          <div class="price">{{ p.price | currency:'PHP' }}</div>
+        </ion-card-header>
+      </ion-card>
+    </div>
+    <ng-template #noItems>
+      <div class="empty">No products found for this category.</div>
+    </ng-template>
+  </ng-container>
 </ion-content>

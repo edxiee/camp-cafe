@@ -1,40 +1,114 @@
-ion-content{
-    --background:white;
+ion-content.products-page {
+    --background: #ffffff;
 }
 
-h1{
-    color: beige;
+.header {
+    padding: 16px 16px 0;
 }
 
-ion-card {
-  width: 180px; // Fixed width
-  height: 250px; // Fixed total height
-  margin: 8px;
-  display: flex;
-  flex-direction: column;
-  --background: white;
-  
-  
-  img {
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #222;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    column-gap: 8px;
+    row-gap: 4px;
+    padding: 16px;
+    align-items: stretch;
+}
+
+.category-segment {
+    margin: 8px 8px 0;
+    --background: #ffffff;
+    --indicator-color: transparent;
+    --indicator-height: 0;
+    --indicator-border-radius: 0;
+    box-shadow: none;
+}
+
+.category-segment ion-segment-button {
+    --background: transparent;
+    --background-checked: transparent;
+    --color: #666;
+    --color-checked: #111;
+
+}
+
+.category-segment ion-segment-button ion-label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Show underline only on the selected segment button */
+.category-segment ion-segment-button.segment-button-checked,
+.category-segment ion-segment-button[aria-pressed="true"],
+.category-segment ion-segment-button.ion-activated {
+    border-bottom-color: transparent;
+}
+
+.product-card {
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.product-card:focus-within,
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.card-image {
     width: 100%;
-    height: 200px; // Fixed image height
-    object-fit: cover; // Crops/scales image to fit without distortion
-    object-position: center; // Centers the image
-  }
-  
-  ion-card-header {
-    flex: 1; // Takes remaining space
-    display: flex;
-    align-items: center;
-    padding: 0;
-    
-    
-    ion-card-title {
-      font-size: 16px;
-      width: 100%;
-      color: black;
-    }
-  }
+    height: 140px;
+    object-fit: cover;
+    display: block;
 }
 
-// For the flex container
+ion-card-header {
+  padding: 12px 14px;
+  background-color: #ffffff;
+}
+ion-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    text-align: left;
+}
+
+@media (min-width: 768px) {
+    .card-grid {
+        column-gap: 8px;
+        row-gap: 6px;
+    }
+    .card-image {
+        height: 160px;
+    }
+}
+
+
+
+ion-card-content{
+  color: #111;
+    background-color: #ffffff;
+}
+.no-image {
+    height: 140px;
+    display: grid;
+    place-items: center;
+    background: #f2f2f2;
+    color: #666;
+}
+
+.empty {
+    padding: 24px 16px;
+    color: #666;
+    text-align: center;
+}
+

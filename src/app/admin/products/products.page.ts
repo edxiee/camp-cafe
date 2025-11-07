@@ -207,8 +207,7 @@ export class ProductsPage implements OnInit {
 
     // Navigate to other admin pages when they're created
     if (tab === 'users') {
-      alert('Users page coming soon!');
-      this.selectedTab = 'products'; // Reset to products
+      this.router.navigate(['/admin/users']);
     } else if (tab === 'transactions') {
       alert('Transactions page coming soon!');
       this.selectedTab = 'products'; // Reset to products
