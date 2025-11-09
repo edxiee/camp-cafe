@@ -5,11 +5,13 @@ import { ToastController } from '@ionic/angular';
 import { Observable, Subject, map, of, switchMap, take, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { CartItem, CartService } from 'src/app/services/cart.service';
+import { TransactionService } from 'src/app/services/transaction.service';
 import { UserService } from 'src/app/user.service';
 
 interface CheckoutFormState {
   fullName: string;
   phone: string;
+  address: string;
   paymentMethod: 'cash' | 'gcash' | '';
   notes: string;
 }
@@ -32,6 +34,7 @@ export class CheckoutPage implements OnInit, OnDestroy {
   form: CheckoutFormState = {
     fullName: this.prefilledFullName,
     phone: '',
+    address: '',
     paymentMethod: '',
     notes: ''
   };
@@ -43,7 +46,8 @@ export class CheckoutPage implements OnInit, OnDestroy {
     private toastController: ToastController,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private transactionService: TransactionService
   ) {}
 
   ngOnInit() {
@@ -102,11 +106,44 @@ export class CheckoutPage implements OnInit, OnDestroy {
 
     this.submitting = true;
     try {
+      const user = await this.authService.getCurrentUser();
+      if (!user) {
+        await this.presentToast('You need to be logged in to place an order.', 'danger');
+        return;
+      }
+
+      const paymentMethod = this.form.paymentMethod as 'cash' | 'gcash';
+      const paymentStatus = paymentMethod === 'gcash' ? 'paid' : 'unpaid';
+      const total = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
+
+      await this.transactionService.createTransaction({
+        userId: user.uid,
+        userName: this.form.fullName.trim(),
+        userEmail: user.email ?? '',
+        phone: this.form.phone.trim(),
+        address: this.form.address.trim(),
+        paymentMethod,
+        paymentStatus,
+        notes: this.form.notes?.trim(),
+        total,
+        items: items.map(item => ({
+          cartItemId: item.id,
+          productId: item.productId,
+          name: item.name,
+          size: item.size,
+          unitPrice: item.unitPrice,
+          quantity: item.quantity,
+          type: item.type,
+          imageUrl: item.imageUrl,
+          lineTotal: item.unitPrice * item.quantity,
+        })),
+      });
+
       await this.cartService.clear();
       await this.presentToast('Order placed! Thank you.', 'success');
       form.resetForm();
       this.resetFormState();
-      await this.router.navigate(['/tabs/home']);
+      await this.router.navigate(['/tabs/cart/thank-you']);
     } catch (error) {
       console.error('Failed to place order', error);
       await this.presentToast('Something went wrong. Please try again.', 'danger');
@@ -129,6 +166,7 @@ export class CheckoutPage implements OnInit, OnDestroy {
     this.form = {
       fullName: this.prefilledFullName,
       phone: '',
+      address: '',
       paymentMethod: '',
       notes: ''
     };

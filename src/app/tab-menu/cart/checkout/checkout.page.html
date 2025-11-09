@@ -109,6 +109,22 @@
                   </div>
 
                   <div class="section">
+                    <h3 class="section-heading">Address</h3>
+                    <ion-textarea
+                      label="Delivery Address"
+                      labelPlacement="floating"
+                      fill="solid"
+                      shape="round"
+                      name="address"
+                      [(ngModel)]="form.address"
+                      required
+                      autoGrow="true"
+                      rows="3"
+                      placeholder="Street, barangay, city">
+                    </ion-textarea>
+                  </div>
+
+                  <div class="section">
                     <h3 class="section-heading">Payment</h3>
                     <div class="payment-options">
                       <ion-radio-group name="paymentMethod" [(ngModel)]="form.paymentMethod" required>
