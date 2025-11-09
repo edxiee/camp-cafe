@@ -1,0 +1,16 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Order Complete</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="thank-you-page">
+  <div class="thank-you-card">
+    <ion-icon name="checkmark-circle-outline" class="thank-you-icon"></ion-icon>
+    <h1>Thank you!</h1>
+    <p>Your order is now on its way. We9ll keep you posted with updates.</p>
+    <ion-button expand="block" size="large" (click)="returnHome()">
+      Return to Home
+    </ion-button>
+  </div>
+</ion-content>

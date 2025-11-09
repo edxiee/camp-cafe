@@ -7,9 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: CartPage
-  },  {
+  },
+  {
     path: 'checkout',
     loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
+  },
+  {
+    path: 'thank-you',
+    loadChildren: () => import('./thank-you/thank-you.module').then( m => m.ThankYouPageModule)
   }
 
 ];
