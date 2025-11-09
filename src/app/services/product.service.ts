@@ -1,5 +1,5 @@
 import { EnvironmentInjector, Injectable, runInInjectionContext } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData, doc, updateDoc, deleteDoc, getDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 export interface Product {
@@ -31,6 +31,21 @@ export class ProductService {
     return runInInjectionContext(this.injector, () => {
       const productsRef = collection(this.firestore, 'products');
       return collectionData(productsRef, { idField: 'id' }) as unknown as Observable<Product[]>;
+    });
+  }
+
+  async getProduct(id: string): Promise<Product | null> {
+    return runInInjectionContext(this.injector, async () => {
+      const productRef = doc(this.firestore, 'products', id);
+      const snap = await getDoc(productRef);
+      if (!snap.exists()) {
+        return null;
+      }
+      const data = snap.data() as Omit<Product, 'id'>;
+      return {
+        id: snap.id,
+        ...data,
+      } as Product;
     });
   }
 

@@ -1,0 +1,89 @@
+.product-detail {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 24px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.product-detail img {
+  width: min(240px, 80%);
+  height: auto;
+  object-fit: cover;
+  border-radius: 16px;
+  margin: 0 auto;
+}
+
+.product-detail .no-image {
+  height: 220px;
+  width: min(240px, 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  color: #666;
+  border-radius: 16px;
+  margin: 0 auto;
+}
+
+.product-detail .name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.product-detail .description {
+  margin: 0;
+  color: #555;
+}
+
+.size-list {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.size-list ion-item {
+  --inner-padding-start: 14px;
+  --inner-padding-end: 14px;
+  --inner-padding-top: 12px;
+  --inner-padding-bottom: 12px;
+  --background: rgba(var(--ion-color-light-rgb, 255, 255, 255), 0.95);
+  border: 1px solid rgba(var(--ion-color-medium-rgb, 152, 154, 162), 0.35);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.size-list ion-item.selected {
+  --background: rgba(var(--ion-color-dark-rgb, 34, 34, 34), 0.08);
+  border-color: var(--ion-color-dark, #222428);
+  box-shadow: 0 0 0 2px rgba(var(--ion-color-dark-rgb, 34, 34, 34), 0.18);
+}
+
+.size-list ion-radio {
+  --color: rgba(var(--ion-color-medium-rgb, 152, 154, 162), 0.7);
+  --color-checked: var(--ion-color-dark, #222428);
+}
+
+.size-list ion-label {
+  font-weight: 600;
+  color: var(--ion-text-color, #000);
+}
+
+.add-to-cart {
+  margin-top: 8px;
+  width: 100%;
+  --background: var(--ion-color-dark, #222428);
+  --background-activated: var(--ion-color-dark-shade, #1e2023);
+  --background-focused: var(--ion-color-dark-shade, #1e2023);
+  --color: var(--ion-color-light, #f4f5f8);
+}

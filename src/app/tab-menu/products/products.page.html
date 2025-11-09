@@ -11,7 +11,7 @@
 
   <ng-container *ngIf="filteredProducts$ | async as products">
     <div class="card-grid" *ngIf="products.length; else noItems">
-      <ion-card class="product-card" *ngFor="let p of products">
+      <ion-card class="product-card" *ngFor="let p of products" (click)="openProduct(p.id)">
         <img class="card-image" [alt]="p.name" [src]="p.imageUrl" *ngIf="p.imageUrl; else noImg" />
         <ng-template #noImg>
           <div class="no-image">No image</div>
