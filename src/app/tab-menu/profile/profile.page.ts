@@ -8,6 +8,7 @@ import { UpdateProfileModal } from './updateProfile/update-profile.modal';
 import { AboutAppModal } from './aboutApp/aboutApp.modal';
 import { AboutProductModal } from './aboutProduct/aboutProduct.modal';
 import { BillingModal } from './billing/billing.modal';
+import { SecurityModal } from './security/security.modal';
 
 @Component({
   selector: 'app-tab4',
@@ -74,6 +75,14 @@ export class ProfilePage {
       cssClass: 'custom-modal'
     });
 
+    await modal.present();
+  }
+
+  async openSecurity() {
+    const modal = await this.modalCtrl.create({
+      component: SecurityModal,
+      cssClass: 'custom-modal'
+    });
     await modal.present();
   }
 

@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Change Password</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+    <ion-item>
+      <ion-label position="floating">Current Password</ion-label>
+      <ion-input
+        type="password"
+        formControlName="currentPassword"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">New Password</ion-label>
+      <ion-input
+        type="password"
+        formControlName="newPassword"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Confirm Password</ion-label>
+      <ion-input
+        type="password"
+        formControlName="confirmPassword"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-button
+      expand="block"
+      color="primary"
+      type="submit"
+      [disabled]="passwordForm.invalid"
+      class="ion-margin-top"
+    >
+      Change Password
+    </ion-button>
+  </form>
+</ion-content>
