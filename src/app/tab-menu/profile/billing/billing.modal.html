@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Billing</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modal-content">
+  <ion-list class="list">
+      <ion-label position="stacked" class="input-label">Bank Name</ion-label>
+      <ion-input [(ngModel)]="bankName" placeholder="Bank name" class="input-field"></ion-input>
+
+      <ion-label position="stacked" class="input-label">Cardholder Name</ion-label>
+      <ion-input [(ngModel)]="cardName" placeholder="Name on card" class="input-field"></ion-input>
+
+      <ion-label position="stacked" class="input-label">Card Number</ion-label>
+      <ion-input [(ngModel)]="cardNumber" inputmode="numeric" placeholder="1234 5678 9012 3456" class="input-field"></ion-input>
+
+      <ion-label position="stacked" class="input-label">Expiry (MM/YY)</ion-label>
+      <ion-input [(ngModel)]="expiry" placeholder="MM/YY" class="input-field"></ion-input>
+
+      <ion-label position="stacked" class="input-label">CVV</ion-label>
+      <ion-input [(ngModel)]="cvv" inputmode="numeric" maxlength="4" placeholder="123" class="input-field"></ion-input>
+  </ion-list>
+
+  <div class="button-group">
+    <ion-button expand="block" class="save-btn" (click)="save()">Save</ion-button>
+    <ion-button expand="block" class="save-btn" (click)="dismiss()">Cancel</ion-button>
+  </div>
+</ion-content>

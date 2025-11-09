@@ -126,7 +126,8 @@ export class SignupPage {
       }
 
       // Create user profile in Firestore
-      const username = (email.split('@')[0] || '').toLowerCase();
+      // Build username from firstName + lastName (display name)
+      const username = [firstName, lastName].filter(Boolean).join(' ').trim();
       await this.userService.createUserProfile(uid, {
         email,
         username,

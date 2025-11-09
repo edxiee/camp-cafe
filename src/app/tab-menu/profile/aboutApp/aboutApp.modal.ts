@@ -9,7 +9,7 @@ import { ModalController } from '@ionic/angular';
     <ion-toolbar>
     <ion-title>About the App</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">Close</ion-button>
+      <ion-button (click)="closeModal()" style="color: white;">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

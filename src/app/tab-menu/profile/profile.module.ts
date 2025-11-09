@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ProfilePage } from './profile.page';
 import { UpdateProfileModal } from './updateProfile/update-profile.modal';
 import { AboutAppModal } from './aboutApp/aboutApp.modal';
-import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
+import { BillingModal } from './billing/billing.modal';
 
 import { ProfilePageRoutingModule } from './profile-routing.module';
 
@@ -14,9 +14,8 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
     ProfilePageRoutingModule
   ],
-  declarations: [ProfilePage, UpdateProfileModal, AboutAppModal]
+  declarations: [ProfilePage, UpdateProfileModal, AboutAppModal,BillingModal]
 })
 export class ProfilePageModule {}
