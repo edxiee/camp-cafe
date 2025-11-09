@@ -46,6 +46,12 @@ export class ProductsPage {
     });
   }
 
+  openProduct(id?: string) {
+    if (!id) return;
+    // navigate to detail page under tabs/products/detail/:id
+    this.router.navigate(['tabs', 'products', 'detail', id]);
+  }
+
   onSegmentChanged(ev: CustomEvent) {
     const value = (ev.detail as any)?.value ?? ev.detail;
     this.selectedCategory = value;

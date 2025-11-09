@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/products"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="loading">
+    <ion-spinner name="crescent"></ion-spinner>
+  </ng-container>
+
+  <ng-container *ngIf="!loading && product; else noProduct">
+    <div class="product-detail">
+      <ng-container *ngIf="product.imageUrl; else placeholder">
+        <img [src]="product.imageUrl" [alt]="product.name" />
+      </ng-container>
+      <ng-template #placeholder>
+        <div class="no-image">No image available</div>
+      </ng-template>
+
+  <h2 class="name">{{ product.name }}</h2>
+
+      <p class="description">{{ product.description }}</p>
+
+      <ion-list lines="none" class="size-list">
+        <ion-radio-group [(ngModel)]="selectedSize">
+          <ion-item mode="md" button detail="false" (click)="selectSize('regular')" [class.selected]="selectedSize === 'regular'">
+            <ion-radio value="regular" slot="start"></ion-radio>
+            <ion-label>Regular</ion-label>
+          </ion-item>
+          <ion-item mode="md" button detail="false" (click)="selectSize('large')" [class.selected]="selectedSize === 'large'">
+            <ion-radio value="large" slot="start"></ion-radio>
+            <ion-label>Large (+₱20)</ion-label>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+
+      <ion-button expand="block" class="add-to-cart" color="dark" (click)="addToCart()">
+        Add to Cart — {{ displayPrice | currency:'PHP' }}
+      </ion-button>
+    </div>
+  </ng-container>
+
+  <ng-template #noProduct>
+    <p>Product not found.</p>
+  </ng-template>
+</ion-content>

@@ -1,15 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // MODIFIED: Added Router import
-
-interface CartItem {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  quantity: number;
-  image: string;
-  isFavorite: boolean;
-}
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { CartItem, CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -17,47 +9,24 @@ interface CartItem {
   styleUrls: ['./cart.page.scss'],
   standalone: false,
 })
-export class CartPage implements OnInit {
+export class CartPage implements OnInit, OnDestroy {
+  cartItems: CartItem[] = [];
+  private subscription?: Subscription;
 
-  // these items are only sample
-  cartItems: CartItem[] = [
-    {
-      id: 1,
-      name: 'Matcha Latte',
-      category: 'Tea & Herbal Infusions',
-      price: 299.00,
-      quantity: 2,
-      image: 'assets/images/products/matcha.jpg',
-      isFavorite: false
-    },
-    {
-      id: 2,
-      name: 'Cappuccino',
-      category: 'Classic Flavors',
-      price: 259.00,
-      quantity: 1,
-      image: 'assets/images/products/cappucino.jpg',
-      isFavorite: true
-    },
-    {
-      id: 3,
-      name: 'Strawberry Milkshake',
-      category: 'Frappe',
-      price: 359.00,
-      quantity: 1,
-      image: 'assets/images/products/strawberry milkshake.jpg',
-      isFavorite: false
-    }
-  ];
-
-  // MODIFIED: Added Router to constructor
-  constructor(private router: Router) { }
+  constructor(private router: Router, private cartService: CartService) {}
 
   ngOnInit() {
+    this.subscription = this.cartService.items$.subscribe(items => {
+      this.cartItems = items;
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   get totalPrice(): number {
-    return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return this.cartItems.reduce((total, item) => total + (item.unitPrice * item.quantity), 0);
   }
 
   get totalItems(): number {
@@ -65,29 +34,29 @@ export class CartPage implements OnInit {
   }
 
   increaseQuantity(item: CartItem) {
-    item.quantity++;
+    this.cartService.changeQuantity(item.id, item.quantity + 1);
   }
 
   decreaseQuantity(item: CartItem) {
-    if (item.quantity > 1) {
-      item.quantity--;
-    } else {
-      // Optional: Remove item if quantity becomes 0
+    const next = item.quantity - 1;
+    if (next < 1) {
       this.removeItem(item.id);
+      return;
     }
+    this.cartService.changeQuantity(item.id, next);
   }
 
   toggleFavorite(item: CartItem) {
-    item.isFavorite = !item.isFavorite;
+    this.cartService.toggleFavorite(item.id);
   }
 
-  removeItem(itemId: number) {
-    this.cartItems = this.cartItems.filter(item => item.id !== itemId);
+  removeItem(itemId: string) {
+    this.cartService.removeItem(itemId);
   }
 
   checkout() {
-    // Implement checkout logic here
-    console.log('Proceeding to checkout with items:', this.cartItems);
+    const payload = this.cartService.getSnapshot();
+    console.log('Proceeding to checkout with items:', payload);
     alert('Proceeding to checkout!');
   }
 

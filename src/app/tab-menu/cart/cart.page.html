@@ -21,14 +21,15 @@
       <div class="item-content">
         <!-- Column 1: Photo -->
         <div class="item-image">
-          <img [src]="item.image" [alt]="item.name">
+          <img [src]="item.imageUrl || 'assets/icon/favicon.png'" [alt]="item.name">
         </div>
         
         <!-- Column 2: Product Details -->
         <div class="item-details">
           <h3 class="item-name">{{item.name}}</h3>
-          <p class="item-category">{{item.category}}</p>
-          <p class="item-price">P{{item.price * item.quantity | number:'1.2-2'}}</p>
+          <p class="item-category">{{item.type}}</p>
+          <p class="item-size">Size: {{item.size | titlecase}}</p>
+          <p class="item-price">P{{item.unitPrice * item.quantity | number:'1.2-2'}}</p>
         </div>
         
         <!-- Column 3: Quantity Controls -->
@@ -47,7 +48,7 @@
           <ion-icon [name]="item.isFavorite ? 'heart' : 'heart-outline'"></ion-icon>
           {{item.isFavorite ? 'Added to Favorites' : 'Add to Favorites'}}
         </button>
-        <button class="action-btn delete" (click)="removeItem(item.id)">
+  <button class="action-btn delete" (click)="removeItem(item.id)">
           <ion-icon name="trash-outline"></ion-icon>
           Delete
         </button>
