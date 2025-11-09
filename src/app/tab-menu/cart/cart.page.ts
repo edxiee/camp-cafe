@@ -55,9 +55,7 @@ export class CartPage implements OnInit, OnDestroy {
   }
 
   checkout() {
-    const payload = this.cartService.getSnapshot();
-    console.log('Proceeding to checkout with items:', payload);
-    alert('Proceeding to checkout!');
+    this.router.navigate(['/tabs/cart/checkout']);
   }
 
   // Back button from cart to product page
