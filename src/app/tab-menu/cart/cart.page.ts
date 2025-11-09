@@ -33,25 +33,25 @@ export class CartPage implements OnInit, OnDestroy {
     return this.cartItems.reduce((total, item) => total + item.quantity, 0);
   }
 
-  increaseQuantity(item: CartItem) {
-    this.cartService.changeQuantity(item.id, item.quantity + 1);
+  async increaseQuantity(item: CartItem) {
+    await this.cartService.changeQuantity(item.id, item.quantity + 1);
   }
 
-  decreaseQuantity(item: CartItem) {
+  async decreaseQuantity(item: CartItem) {
     const next = item.quantity - 1;
     if (next < 1) {
-      this.removeItem(item.id);
+      await this.removeItem(item.id);
       return;
     }
-    this.cartService.changeQuantity(item.id, next);
+    await this.cartService.changeQuantity(item.id, next);
   }
 
-  toggleFavorite(item: CartItem) {
-    this.cartService.toggleFavorite(item.id);
+  async toggleFavorite(item: CartItem) {
+    await this.cartService.toggleFavorite(item.id);
   }
 
-  removeItem(itemId: string) {
-    this.cartService.removeItem(itemId);
+  async removeItem(itemId: string) {
+    await this.cartService.removeItem(itemId);
   }
 
   checkout() {

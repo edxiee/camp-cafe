@@ -54,13 +54,24 @@ export class ProductDetailPage {
     if (!this.product) {
       return;
     }
-    this.cartService.addItem(this.product, this.selectedSize);
-    const toast = await this.toastController.create({
-      message: `${this.product.name} (${this.selectedSize === 'large' ? 'Large' : 'Regular'}) added to cart`,
-      duration: 1500,
-      position: 'bottom'
-    });
-    await toast.present();
+    try {
+      await this.cartService.addItem(this.product, this.selectedSize);
+      const toast = await this.toastController.create({
+        message: `${this.product.name} (${this.selectedSize === 'large' ? 'Large' : 'Regular'}) added to cart`,
+        duration: 1500,
+        position: 'bottom'
+      });
+      await toast.present();
+    } catch (error) {
+      console.warn('Failed to sync cart item', error);
+      const toast = await this.toastController.create({
+        message: 'Unable to save to cart. Please try again.',
+        duration: 1500,
+        position: 'bottom',
+        color: 'danger'
+      });
+      await toast.present();
+    }
   }
 
   selectSize(size: CartSize) {
