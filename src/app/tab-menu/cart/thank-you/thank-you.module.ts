@@ -1,0 +1,12 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+
+import { ThankYouPageRoutingModule } from './thank-you-routing.module';
+import { ThankYouPage } from './thank-you.page';
+
+@NgModule({
+  imports: [CommonModule, IonicModule, ThankYouPageRoutingModule],
+  declarations: [ThankYouPage],
+})
+export class ThankYouPageModule {}

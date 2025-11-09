@@ -1,0 +1,193 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/cart"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="checkout-page">
+  <ng-container *ngIf="items$ | async as items">
+    <ng-container *ngIf="items.length; else emptyState">
+      <div class="checkout-hero">
+        <div class="progress-indicator" aria-hidden="true">
+          <span class="step completed">
+            <ion-icon name="cart-outline"></ion-icon>
+          </span>
+          <span class="line"></span>
+          <span class="step current">
+            <ion-icon name="create-outline"></ion-icon>
+          </span>
+          <span class="line"></span>
+          <span class="step upcoming">
+            <ion-icon name="checkmark-outline"></ion-icon>
+          </span>
+        </div>
+        <h1>Complete your order</h1>
+        <p>Review your basket and share the delivery details so we can prepare everything fresh.</p>
+      </div>
+
+      <form #checkoutForm="ngForm" class="checkout-form" (ngSubmit)="submitOrder(checkoutForm)">
+        <ion-grid class="checkout-grid">
+          <ion-row class="checkout-row">
+            <ion-col size="12" sizeMd="5">
+              <ion-card class="summary-card">
+                <ion-card-header>
+                  <ion-card-subtitle>Your basket</ion-card-subtitle>
+                  <ion-card-title>Order Summary</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-chip color="warning" class="items-chip">
+                    <ion-icon name="flame-outline"></ion-icon>
+                    <ion-label>{{ items.length }} {{ items.length === 1 ? 'item' : 'items' }}</ion-label>
+                  </ion-chip>
+
+                  <ion-list lines="none">
+                    <ion-item lines="none" class="summary-item" *ngFor="let item of items">
+                      <div class="summary-thumb" slot="start" *ngIf="item.imageUrl">
+                        <img [src]="item.imageUrl" [alt]="item.name" />
+                      </div>
+                      <ion-icon *ngIf="!item.imageUrl" slot="start" name="cafe-outline" class="summary-icon"></ion-icon>
+                      <ion-label>
+                        <div class="item-primary">{{ item.name }}</div>
+                        <div class="item-meta">{{ item.size | titlecase }} · {{ item.quantity }} × ₱{{ item.unitPrice | number:'1.2-2' }}</div>
+                      </ion-label>
+                      <ion-note slot="end">₱{{ item.unitPrice * item.quantity | number:'1.2-2' }}</ion-note>
+                    </ion-item>
+                  </ion-list>
+
+                  <div class="summary-total">
+                    <span>Total</span>
+                    <strong>₱{{ (total$ | async) || 0 | number:'1.2-2' }}</strong>
+                  </div>
+                  <p class="summary-note">
+                    Delivery within 20–30 minutes once you place your order. We'll send updates along the way.
+                  </p>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+
+            <ion-col size="12" sizeMd="7">
+              <ion-card class="form-card">
+                <ion-card-header>
+                  <ion-card-subtitle>Delivery & payment</ion-card-subtitle>
+                  <ion-card-title>Your details</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  <div class="section">
+                    <h3 class="section-heading">Contact</h3>
+                    <div class="field-grid">
+                      <ion-input
+                        label="Full Name"
+                        labelPlacement="floating"
+                        fill="solid"
+                        shape="round"
+                        name="fullName"
+                        [(ngModel)]="form.fullName"
+                        required
+                        autocomplete="name"
+                        maxlength="60"
+                        placeholder="Enter your name">
+                      </ion-input>
+
+                      <ion-input
+                        label="Phone Number"
+                        labelPlacement="floating"
+                        fill="solid"
+                        shape="round"
+                        name="phone"
+                        [(ngModel)]="form.phone"
+                        required
+                        type="tel"
+                        inputmode="tel"
+                        autocomplete="tel"
+                        maxlength="11"
+                        placeholder="09XXXXXXXXX">
+                      </ion-input>
+                    </div>
+                  </div>
+
+                  <div class="section">
+                    <h3 class="section-heading">Address</h3>
+                    <ion-textarea
+                      label="Delivery Address"
+                      labelPlacement="floating"
+                      fill="solid"
+                      shape="round"
+                      name="address"
+                      [(ngModel)]="form.address"
+                      required
+                      autoGrow="true"
+                      rows="3"
+                      placeholder="Street, barangay, city">
+                    </ion-textarea>
+                  </div>
+
+                  <div class="section">
+                    <h3 class="section-heading">Payment</h3>
+                    <div class="payment-options">
+                      <ion-radio-group name="paymentMethod" [(ngModel)]="form.paymentMethod" required>
+                        <ion-item lines="none" class="payment-card" [class.selected]="form.paymentMethod === 'cash'">
+                          <ion-radio slot="start" value="cash"></ion-radio>
+                          <div (click)="selectPaymentMethod('cash')">
+                            <div class="payment-title">Cash on Delivery</div>
+                            <div class="payment-desc">Pay the rider once your drinks arrive.</div>
+                          </div>
+                        </ion-item>
+
+                        <ion-item lines="none" class="payment-card" [class.selected]="form.paymentMethod === 'gcash'">
+                          <ion-radio slot="start" value="gcash"></ion-radio>
+                          <div (click)="selectPaymentMethod('gcash')">
+                            <div class="payment-title">GCash</div>
+                            <div class="payment-desc">Send a quick transfer after delivery confirmation.</div>
+                          </div>
+                        </ion-item>
+                      </ion-radio-group>
+                    </div>
+                    <p class="payment-hint">We will confirm the preferred payment method with you before dispatch.</p>
+                  </div>
+
+                  <div class="section">
+                    <h3 class="section-heading">Notes</h3>
+                    <ion-textarea
+                      label="Additional Notes (optional)"
+                      labelPlacement="floating"
+                      fill="solid"
+                      shape="round"
+                      name="notes"
+                      [(ngModel)]="form.notes"
+                      autoGrow="true"
+                      placeholder="Gate code, nearby landmarks, or drink adjustments">
+                    </ion-textarea>
+                  </div>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <div class="form-actions">
+          <ion-button
+            type="submit"
+            expand="block"
+            size="large"
+            class="place-order-btn"
+            [disabled]="submitting || checkoutForm.invalid">
+            <ion-spinner slot="start" name="lines" *ngIf="submitting"></ion-spinner>
+            <ion-icon slot="start" name="bag-check-outline" *ngIf="!submitting"></ion-icon>
+            {{ submitting ? 'Placing Order…' : 'Place Order' }}
+          </ion-button>
+        </div>
+      </form>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <ion-icon name="cart-outline"></ion-icon>
+      <p>Your cart is empty.</p>
+      <ion-button fill="clear" routerLink="/tabs/products">Browse products</ion-button>
+    </div>
+  </ng-template>
+</ion-content>
