@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/auth.service';
 import { UserService } from 'src/app/user.service';
 import { UpdateProfileModal } from './updateProfile/update-profile.modal';
 import { AboutAppModal } from './aboutApp/aboutApp.modal';
+import { AboutProductModal } from './aboutProduct/aboutProduct.modal';
 import { BillingModal } from './billing/billing.modal';
 
 @Component({
@@ -61,6 +62,15 @@ export class ProfilePage {
   async aboutApp() {
     const modal = await this.modalCtrl.create({
       component: AboutAppModal,
+      cssClass: 'custom-modal'
+    });
+
+    await modal.present();
+  }
+
+  async aboutProduct() {
+    const modal = await this.modalCtrl.create({
+      component: AboutProductModal,
       cssClass: 'custom-modal'
     });
 
