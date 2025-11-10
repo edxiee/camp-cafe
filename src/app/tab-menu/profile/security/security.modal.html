@@ -1,49 +1,48 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-title>Change Password</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">Close</ion-button>
+      <ion-button fill="clear" (click)="closeModal()" color="calm">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
-    <ion-item>
-      <ion-label position="floating">Current Password</ion-label>
+
+    <ion-list class="list">
+      <ion-label position="floating" class="input-label">Current Password</ion-label>
       <ion-input
         type="password"
         formControlName="currentPassword"
+        autocomplete="current-password"
+        class="input-field"
+        placeholder="Current Password"
         required
       ></ion-input>
-    </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">New Password</ion-label>
+      <ion-label position="floating" class="input-label">New Password</ion-label>
       <ion-input
         type="password"
         formControlName="newPassword"
+        autocomplete="new-password"
+        class="input-field"
+        placeholder="New Password"
         required
       ></ion-input>
-    </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Confirm Password</ion-label>
+      <ion-label position="floating" class="input-label">Confirm New Password</ion-label>
       <ion-input
         type="password"
         formControlName="confirmPassword"
+        autocomplete="new-password"
+        class="input-field"
+        placeholder="Retype Password"
         required
       ></ion-input>
-    </ion-item>
 
-    <ion-button
-      expand="block"
-      color="primary"
-      type="submit"
-      [disabled]="passwordForm.invalid"
-      class="ion-margin-top"
-    >
-      Change Password
-    </ion-button>
+    <ion-button class="ion-margin-top" expand="block" type="submit" [disabled]="passwordForm.invalid" class="save-btn"> Change Password </ion-button>
+    <ion-button expand="block" class="cancel-btn" (click)="dismiss()">Cancel</ion-button>
+    </ion-list>
   </form>
 </ion-content>

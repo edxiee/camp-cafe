@@ -27,13 +27,12 @@ ion-input {
   color: rgb(121, 73, 2);
   text-align: left;
   display: block;    
-  padding-top: 3em;
-  padding-bottom: 0.7em;
+  padding-bottom: 1em;
 }
 
 .input-field {
   width: 70%;     
-  margin: 0 auto 15px auto; 
+  margin: 0 auto 5px auto; 
   border: 1px solid #ccc;
   border-radius: 4px;
   --padding-start: 10px;
@@ -52,4 +51,25 @@ ion-input {
   --border-radius: 10px;
   display: block;
   margin: 20px auto; /* centers horizontally */
+  padding-top: 1.7em;
+}
+
+.cancel-btn {
+  --background: #c79c5a;
+  color: white;
+  font-weight: 600;
+  height: 50px;
+  width: 70%;
+  --border-radius: 10px;
+  display: block;
+  margin: 20px auto; /* centers horizontally */
+  padding-top: 1.3em;
+}
+
+.list{
+  margin-top: 1.5em;;
+}
+
+ion-button {
+  color: #fff;
 }
