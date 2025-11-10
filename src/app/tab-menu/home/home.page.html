@@ -1,74 +1,149 @@
-<ion-header>
-  <ion-toolbar class="home-toolbar">
-    <ion-title class="branding">Camp Cafe</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- Side Menu (only available on Home) -->
+<ion-menu contentId="home-content" side="start" menuId="homeMenu">
+  <ion-header>
+    <ion-toolbar color="dark">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content [fullscreen]="true" class="home-content">
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-text">
-      <h1>Fresh Brews & Cool Sips</h1>
-      <p>Discover your next favorite drink. Hot comforts or iced refreshers delivered with style.</p>
-      <div class="hero-actions">
-        <ion-button color="dark" fill="solid" (click)="navigateToProducts()">Browse Menu</ion-button>
-  <ion-button color="medium" fill="outline" (click)="navigateToCategory('iced')">Iced Drinks</ion-button>
+  <ion-content>
+    <div class="header">
+      <div class="photo-wrapper">
+        <ng-container *ngIf="photoURL; else defaultAvatar">
+          <img [src]="photoURL" alt="Profile photo" />
+        </ng-container>
       </div>
+      <ng-template #defaultAvatar>
+        <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
+      </ng-template>
+      <p>{{ name }}</p>
     </div>
-    <div class="hero-art">
-      <img src="assets/logo.png" alt="cafe art" />
-    </div>
-  </section>
+    <ion-list style="margin-top: 1em;">
+      <ion-item button routerLink="/tabs/home" (click)="closeMenu()">
+        <ion-icon name="home-outline" slot="start"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-item>
 
-  <!-- Quick Categories -->
-  <section class="quick-cats">
-    <h2 class="section-title">Categories</h2>
-    <div class="chips">
-      <ion-chip (click)="navigateToCategory('iced')">
-        <ion-label>Ice</ion-label>
-      </ion-chip>
-      <ion-chip (click)="navigateToCategory('hot')">
-        <ion-label>Hot</ion-label>
-      </ion-chip>
-      <ion-chip (click)="navigateToCategory('refresher')">
-        <ion-label>Refreshers</ion-label>
-      </ion-chip>
-      <ion-chip (click)="navigateToCategory('frappe')">
-        <ion-label>Frappe</ion-label>
-      </ion-chip>
-      <ion-chip (click)="navigateToCategory('non-caffeinated')">
-        <ion-label>Non-Caffeinated</ion-label>
-      </ion-chip>
-      <ion-chip (click)="navigateToProducts()">
-        <ion-label>All</ion-label>
-      </ion-chip>
-    </div>
-  </section>
+      <ion-item button routerLink="/tabs/products" (click)="closeMenu()">
+        <ion-icon name="cafe-outline" slot="start"></ion-icon>
+        <ion-label>Products</ion-label>
+      </ion-item>
 
-  <!-- Featured -->
-  <section class="featured" *ngIf="featured$ | async as featured">
-    <h2 class="section-title">Featured</h2>
-    <div class="featured-grid">
-      <ion-card *ngFor="let p of featured" class="feat-card" (click)="navigateToProducts()">
-        <img *ngIf="p.imageUrl" [src]="p.imageUrl" [alt]="p.name" />
-        <div *ngIf="!p.imageUrl" class="no-image">No image</div>
-        <ion-card-header>
-          <ion-card-title>{{ p.name }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <p class="price">₱{{ p.price }}</p>
-        </ion-card-content>
-      </ion-card>
-      <div class="empty" *ngIf="!featured.length">No featured items yet.</div>
-    </div>
-  </section>
+      <ion-item button routerLink="/tabs/cart" (click)="closeMenu()">
+        <ion-icon name="cart-outline" slot="start"></ion-icon>
+        <ion-label>Cart</ion-label>
+      </ion-item>
 
-  <!-- Call to action -->
-  <section class="cta">
-    <div class="cta-box">
-      <h2>Ready to order?</h2>
-      <p>Explore the full menu and add your favorites to the cart.</p>
-      <ion-button color="dark" (click)="navigateToProducts()">View Products</ion-button>
-    </div>
-  </section>
-</ion-content>
+      <ion-item button routerLink="/tabs/profile" (click)="closeMenu()">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-item>
+
+      <ion-item button routerLink="/about" (click)="aboutApp()" (click)="closeMenu()">
+        <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+        <ion-label>About the App</ion-label>
+      </ion-item>
+
+      <ion-button expand="block" class="red-btn" (click)="onLogout()" (click)="closeMenu()">Log out</ion-button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<!-- Main Home Content -->
+<div class="ion-page" id="home-content">
+  <ion-header>
+    <ion-toolbar class="home-toolbar">
+      <ion-buttons slot="start">
+        <ion-menu-button menu="homeMenu"></ion-menu-button>
+      </ion-buttons>
+      <ion-title class="branding">Camp Cafe</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [fullscreen]="true" class="home-content">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Fresh Brews & Cool Sips</h1>
+        <p>
+          Discover your next favorite drink. Hot comforts or iced refreshers
+          delivered with style.
+        </p>
+        <div class="hero-actions">
+          <ion-button color="dark" fill="solid" (click)="navigateToProducts()"
+            >Browse Menu</ion-button
+          >
+          <ion-button
+            color="medium"
+            fill="outline"
+            (click)="navigateToCategory('iced')"
+            >Iced Drinks</ion-button
+          >
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="assets/logo.png" alt="cafe art" />
+      </div>
+    </section>
+
+    <!-- Quick Categories -->
+    <section class="quick-cats">
+      <h2 class="section-title">Categories</h2>
+      <div class="chips">
+        <ion-chip (click)="navigateToCategory('iced')">
+          <ion-label>Ice</ion-label>
+        </ion-chip>
+        <ion-chip (click)="navigateToCategory('hot')">
+          <ion-label>Hot</ion-label>
+        </ion-chip>
+        <ion-chip (click)="navigateToCategory('refresher')">
+          <ion-label>Refreshers</ion-label>
+        </ion-chip>
+        <ion-chip (click)="navigateToCategory('frappe')">
+          <ion-label>Frappe</ion-label>
+        </ion-chip>
+        <ion-chip (click)="navigateToCategory('non-caffeinated')">
+          <ion-label>Non-Caffeinated</ion-label>
+        </ion-chip>
+        <ion-chip (click)="navigateToProducts()">
+          <ion-label>All</ion-label>
+        </ion-chip>
+      </div>
+    </section>
+
+    <!-- Featured -->
+    <section class="featured" *ngIf="featured$ | async as featured">
+      <h2 class="section-title">Featured</h2>
+      <div class="featured-grid">
+        <ion-card
+          *ngFor="let p of featured"
+          class="feat-card"
+          (click)="navigateToProducts()"
+        >
+          <img *ngIf="p.imageUrl" [src]="p.imageUrl" [alt]="p.name" />
+          <div *ngIf="!p.imageUrl" class="no-image">No image</div>
+          <ion-card-header>
+            <ion-card-title>{{ p.name }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p class="price">₱{{ p.price }}</p>
+          </ion-card-content>
+        </ion-card>
+        <div class="empty" *ngIf="!featured.length">
+          No featured items yet.
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to action -->
+    <section class="cta">
+      <div class="cta-box">
+        <h2>Ready to order?</h2>
+        <p>Explore the full menu and add your favorites to the cart.</p>
+        <ion-button color="dark" (click)="navigateToProducts()"
+          >View Products</ion-button
+        >
+      </div>
+    </section>
+  </ion-content>
+</div>
