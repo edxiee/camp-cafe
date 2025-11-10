@@ -1,0 +1,100 @@
+ion-toolbar ion-segment {
+	--background: #f8f5f1;
+}
+
+.transactions-container {
+	padding: 16px;
+}
+
+.transactions-container ion-item {
+	margin-bottom: 12px;
+	border-radius: 12px;
+	--background: #ffffff;
+	--padding-start: 16px;
+	--inner-padding-end: 12px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.transactions-container ion-item:last-child {
+	margin-bottom: 0;
+}
+
+.transactions-container ion-label h3 {
+	margin: 0 0 4px;
+	font-weight: 600;
+	color: #3a220f;
+}
+
+.transaction-meta {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	flex-wrap: wrap;
+	font-size: 0.85rem;
+	color: #6b4a2b;
+}
+
+.transaction-date {
+	margin: 6px 0 0;
+	font-size: 0.8rem;
+	color: #7a7a7a;
+}
+
+.detail-content {
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.detail-card {
+	background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	padding: 16px;
+}
+
+.detail-card h2 {
+	margin: 0 0 8px;
+	font-size: 1rem;
+	font-weight: 600;
+	color: #4a2d16;
+}
+
+.detail-card p {
+	margin: 4px 0;
+	font-size: 0.9rem;
+	color: #2a2a2a;
+}
+
+.item-row {
+	--background: transparent;
+	padding: 0;
+}
+
+.item-row ion-label h3 {
+	margin: 0;
+	font-size: 0.95rem;
+	font-weight: 600;
+}
+
+.item-meta {
+	margin: 4px 0;
+	font-size: 0.85rem;
+	color: #444;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.item-sub {
+	margin: 2px 0;
+	font-size: 0.8rem;
+	color: #6b6b6b;
+}
+
+ion-note {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #3a220f;
+}

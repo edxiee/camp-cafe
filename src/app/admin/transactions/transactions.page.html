@@ -1,0 +1,150 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Admin Panel</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment scrollable="true" [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)">
+      <ion-segment-button value="products">
+        <ion-label>Products</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="users">
+        <ion-label>Users</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="transactions">
+        <ion-label>Transactions</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="logout">
+        <ion-label>Logout</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-toolbar class="sub-tabs">
+    <ion-segment [(ngModel)]="activeFilter">
+      <ion-segment-button value="ongoing">
+        <ion-label>On-going</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="complete">
+        <ion-label>Complete</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div class="transactions-container" *ngIf="(activeFilter === 'ongoing' ? ongoingTransactions$ : completeTransactions$) | async as transactions">
+    <ion-list lines="none">
+      <ion-item *ngFor="let tx of transactions" button detail="true" (click)="openDetails(tx)">
+        <ion-label>
+          <h3>{{ tx.userName || 'Unknown user' }}</h3>
+          <div class="transaction-meta">
+            <span>{{ tx.itemCount }} item{{ tx.itemCount === 1 ? '' : 's' }}</span>
+            <span>&bull;</span>
+            <span>{{ tx.total | currency:'PHP':'symbol':'1.2-2' }}</span>
+          </div>
+          <p class="transaction-date" *ngIf="tx.createdAtDate">
+            Placed {{ tx.createdAtDate | date:'medium' }}
+          </p>
+        </ion-label>
+        <div slot="end" class="status-chips">
+          <ion-chip *ngIf="tx.status" [color]="tx.status === 'complete' ? 'success' : tx.status === 'pending' ? 'warning' : 'medium'">
+            {{ tx.status | titlecase }}
+          </ion-chip>
+          <ion-chip *ngIf="tx.paymentStatus" [color]="tx.paymentStatus === 'paid' ? 'success' : tx.paymentStatus === 'unpaid' ? 'warning' : 'medium'">
+            {{ tx.paymentStatus | titlecase }}
+          </ion-chip>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="!transactions.length">
+        <ion-label>No transactions yet.</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-modal [isOpen]="detailsOpen" (didDismiss)="closeDetails()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Transaction Details</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeDetails()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="detail-content" *ngIf="selectedTransaction as tx">
+        <section class="detail-card">
+          <h2>Summary</h2>
+          <p><strong>Name:</strong> {{ tx.userName || 'Unknown user' }}</p>
+          <p *ngIf="tx.userEmail"><strong>Email:</strong> {{ tx.userEmail }}</p>
+          <p *ngIf="tx.phone"><strong>Phone:</strong> {{ tx.phone }}</p>
+          <p *ngIf="tx.address"><strong>Address:</strong> {{ tx.address }}</p>
+          <p><strong>Total:</strong> {{ tx.total | currency:'PHP':'symbol':'1.2-2' }}</p>
+          <p><strong>Items:</strong> {{ tx.itemCount }}</p>
+          <p *ngIf="tx.paymentMethod"><strong>Payment Method:</strong> {{ tx.paymentMethod | titlecase }}</p>
+          <p *ngIf="tx.paymentStatus"><strong>Payment Status:</strong> {{ tx.paymentStatus | titlecase }}</p>
+          <p *ngIf="tx.status"><strong>Order Status:</strong> {{ tx.status | titlecase }}</p>
+          <p *ngIf="tx.createdAtDate"><strong>Placed:</strong> {{ tx.createdAtDate | date:'medium' }}</p>
+        </section>
+
+  <section class="detail-card" *ngIf="tx.items.length">
+          <h2>Items</h2>
+          <ion-list lines="none">
+            <ion-item class="item-row" *ngFor="let item of tx.items; index as i">
+              <ion-label>
+                <h3>{{ item.name || ('Item ' + (i + 1)) }}</h3>
+                <p class="item-meta">
+                  <span *ngIf="item.quantity !== undefined">{{ item.quantity }} ×&nbsp;</span>
+                  <span>{{ item.unitPrice | currency:'PHP':'symbol':'1.2-2' }}</span>
+                </p>
+                <p class="item-sub" *ngIf="item.size">Size: {{ item.size }}</p>
+                <p class="item-sub" *ngIf="item.type">Type: {{ item.type }}</p>
+              </ion-label>
+              <ion-note slot="end">{{ item.lineTotal | currency:'PHP':'symbol':'1.2-2' }}</ion-note>
+            </ion-item>
+          </ion-list>
+        </section>
+
+        <section class="detail-card" *ngIf="tx.notes">
+          <h2>Notes</h2>
+          <p>{{ tx.notes }}</p>
+        </section>
+
+        <section class="detail-card actions" *ngIf="canEdit; else readonlyStatus">
+          <h2>Update Order</h2>
+          <ion-item>
+            <ion-label position="stacked">Order Status</ion-label>
+            <ion-select [(ngModel)]="formStatus" interface="popover" [disabled]="isSaving">
+              <ion-select-option value="pending">Pending</ion-select-option>
+              <ion-select-option value="complete">Complete</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Payment Status</ion-label>
+            <ion-select [(ngModel)]="formPaymentStatus" interface="popover" [disabled]="isSaving">
+              <ion-select-option value="paid">Paid</ion-select-option>
+              <ion-select-option value="unpaid">Unpaid</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-button expand="block" color="primary" (click)="saveOrderChanges()" [disabled]="isSaving">
+            {{ isSaving ? 'Saving…' : 'Save Changes' }}
+          </ion-button>
+          <ion-button expand="block" color="danger" fill="outline" (click)="cancelOrder()" [disabled]="isSaving">
+            Cancel Order
+          </ion-button>
+        </section>
+
+        <ng-template #readonlyStatus>
+          <section class="detail-card">
+            <h2>Status</h2>
+            <p><strong>Order Status:</strong> {{ tx.status | titlecase }}</p>
+            <p><strong>Payment Status:</strong> {{ tx.paymentStatus | titlecase }}</p>
+          </section>
+        </ng-template>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

@@ -34,8 +34,13 @@ const routes: Routes = [
     path: 'admin/users',
     loadChildren: () => import('./admin/users/users.module').then( m => m.UsersPageModule)
   },
+  {
+    path: 'admin/transactions',
+    loadChildren: () => import('./admin/transactions/transactions.module').then( m => m.TransactionsPageModule)
+  },
   // Fallback: any unknown route goes to login (MUST be last)
   { path: '**', redirectTo: 'login' },
+
 
  
 

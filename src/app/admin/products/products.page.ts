@@ -232,8 +232,7 @@ export class ProductsPage implements OnInit {
     if (tab === 'users') {
       this.router.navigate(['/admin/users']);
     } else if (tab === 'transactions') {
-      alert('Transactions page coming soon!');
-      this.selectedTab = 'products'; // Reset to products
+      this.router.navigate(['/admin/transactions']);
     }
   }
 
