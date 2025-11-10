@@ -32,7 +32,7 @@
         <p class="file-name" *ngIf="selectedImageName">{{ selectedImageName }}</p>
       </div>
 
-        <ion-label position="stacked" class="input-label">New Profile Name</ion-label>
+        <ion-label position="stacked" class="input-label" style="padding-bottom: 0.8em; font-size: 18px;">New Profile Name</ion-label>
         <ion-input [(ngModel)]="newName" placeholder="Enter new name" class="input-field" [disabled]="isSaving"></ion-input>
 
       <ion-button expand="block" class="save-btn" (click)="save()" [disabled]="isSaving">

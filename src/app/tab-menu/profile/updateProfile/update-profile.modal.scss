@@ -104,8 +104,7 @@ ion-input {
   width: 70%;
   --border-radius: 10px;
   display: block;
-  margin: 20px auto; /* centers horizontally */
-  padding-top: 1.7em;
+  margin: 40px auto 20px auto; /* centers horizontally */
 }
 
 .cancel-btn {
@@ -117,7 +116,6 @@ ion-input {
   --border-radius: 10px;
   display: block;
   margin: 20px auto; /* centers horizontally */
-  padding-top: 1.3em;
 }
 
 .close-btn {
