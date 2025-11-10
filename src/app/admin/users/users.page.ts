@@ -74,8 +74,7 @@ export class UsersPage implements OnInit {
     } else if (tab === 'users') {
       // stay on this page
     } else if (tab === 'transactions') {
-      alert('Transactions page coming soon!');
-      this.selectedTab = 'users';
+      this.router.navigate(['/admin/transactions']);
     }
   }
 
