@@ -8,6 +8,7 @@ export interface UserProfile {
   username: string;
   firstName: string;
   lastName: string;
+  photoURL?: string | null;
   createdAt: Date;
 }
 
@@ -39,6 +40,7 @@ export class UserService {
         username: data.username && data.username.trim() ? data.username : defaultUsername,
         firstName: data.firstName,
         lastName: data.lastName,
+        photoURL: data.photoURL,
         createdAt: new Date(),
       };
       console.log('Attempting to save user profile:', userProfile);
@@ -60,7 +62,13 @@ export class UserService {
   // Update user profile
   async updateUserProfile(uid: string, data: Partial<UserProfile>) {
     const userDocRef = doc(this.firestore, `users/${uid}`);
-    return updateDoc(userDocRef, data);
+    const payload: Partial<UserProfile> = {};
+    for (const [key, value] of Object.entries(data)) {
+      if (value !== undefined) {
+        (payload as Record<string, unknown>)[key] = value;
+      }
+    }
+    return updateDoc(userDocRef, payload);
   }
 
   // Find email by username (for login with username)

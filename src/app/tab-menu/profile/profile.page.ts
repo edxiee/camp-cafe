@@ -19,6 +19,7 @@ import { SecurityModal } from './security/security.modal';
 
 export class ProfilePage {
   name = '';
+  photoURL: string | null = null;
 
   constructor(
     private auth: AuthService,
@@ -34,9 +35,11 @@ export class ProfilePage {
         const profile = await firstValueFrom(this.userService.getUserProfile(user.uid));
         // Prefer Firestore username, then Firebase displayName, then email
         this.name = (profile?.username && profile.username.trim()) || user.displayName || user.email || '';
+        this.photoURL = profile?.photoURL ?? user.photoURL ?? null;
       } catch (err) {
         console.error('Error loading profile from Firestore:', err);
         this.name = user.displayName || user.email || '';
+        this.photoURL = user.photoURL ?? null;
       }
     } else {
       this.router.navigate(['/login']);
@@ -46,17 +49,23 @@ export class ProfilePage {
   async updateProfile() {
     const modal = await this.modalCtrl.create({
       component: UpdateProfileModal,
-      componentProps: { currentName: this.name },
+      componentProps: { currentName: this.name, currentPhotoURL: this.photoURL },
       cssClass: 'custom-modal'
     });
 
     const result = await modal.present();
     const { data } = await modal.onDidDismiss();
 
-    if (data && data.newName) {
-      this.name = data.newName;
-      await this.auth.updateName(data.newName);
-      alert('Profile updated!');
+    if (data) {
+      if (typeof data.photoURL !== 'undefined') {
+        this.photoURL = data.photoURL;
+      }
+
+      if (data.newName) {
+        this.name = data.newName;
+        await this.auth.updateName(data.newName);
+        alert('Profile updated!');
+      }
     }
   }
 
