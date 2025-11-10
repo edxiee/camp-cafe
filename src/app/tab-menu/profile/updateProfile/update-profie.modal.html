@@ -2,7 +2,7 @@
       <ion-toolbar>
         <ion-title>Update Profile</ion-title>
         <ion-buttons slot="end">
-          <ion-button fill="clear" (click)="dismiss()" color="calm">Close</ion-button>
+          <ion-button fill="clear" (click)="dismiss()" color="calm" class="close-btn">Close</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -10,6 +10,7 @@
     <ion-content class="modal-content">
 
       <div class="photo-section">
+        <h1 style="color: black;">Change Profile</h1>
         <div class="photo-frame" [class.has-image]="photoPreview">
           <ng-container *ngIf="photoPreview; else noPhoto">
             <img [src]="photoPreview" alt="Profile preview" />
@@ -31,14 +32,10 @@
         <p class="file-name" *ngIf="selectedImageName">{{ selectedImageName }}</p>
       </div>
 
-      <ion-item lines="none">
         <ion-label position="stacked" class="input-label">New Profile Name</ion-label>
         <ion-input [(ngModel)]="newName" placeholder="Enter new name" class="input-field" [disabled]="isSaving"></ion-input>
-      </ion-item>
 
       <ion-button expand="block" class="save-btn" (click)="save()" [disabled]="isSaving">
-        <ion-spinner slot="start" *ngIf="isSaving" name="crescent"></ion-spinner>
-        Save
-      </ion-button>
+        <ion-spinner slot="start" *ngIf="isSaving" name="crescent"></ion-spinner>Save</ion-button>
       <ion-button expand="block" class="cancel-btn" (click)="dismiss()" [disabled]="isSaving">Cancel</ion-button>
     </ion-content>

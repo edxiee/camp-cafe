@@ -18,6 +18,7 @@ ion-toolbar {
   align-items: center;
   gap: 12px;
   width: 100%;
+  padding-top: 2em;
 }
 
 .photo-frame {
@@ -53,6 +54,7 @@ ion-toolbar {
   gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
+  padding-bottom: 1em;
 }
 
 .file-name {
@@ -61,46 +63,63 @@ ion-toolbar {
   color: #6b4a2b;
 }
 
-ion-item {
-  width: 100%;
-  max-width: 340px;
-  --border-radius: 12px;
-  margin: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  --padding-start: 0;
-  --inner-padding-start: 0;
-  --inner-padding-end: 0;
+h1 {
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0 5px;
+  display: block;
+}
+
+ion-input {
+  padding: 8px;
+  font-size: 16px;
 }
 
 .input-label {
+  width: 70%;     
+  margin: 0 auto 5px auto; 
+  --padding-start: 10px;
   color: rgb(121, 73, 2);
-  font-weight: 600;
+  text-align: left;
+  display: block;    
+  padding-top: 1em;
 }
 
 .input-field {
-  --padding-start: 12px;
-  font-size: 16px;
+  width: 70%;     
+  margin: 0 auto 5px auto; 
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  --padding-start: 10px;
   color: black;
+  text-align: left;
+  display: block;    
 }
 
 .save-btn {
   --background: #c79c5a;
   color: white;
   font-weight: 600;
-  height: 48px;
-  width: 100%;
-  max-width: 340px;
+  height: 50px;
+  width: 70%;
   --border-radius: 10px;
-  margin: 8px auto 0;
+  display: block;
+  margin: 20px auto; /* centers horizontally */
+  padding-top: 1.7em;
 }
 
 .cancel-btn {
-  --background: #e0e0e0;
-  color: #4a4a4a;
+  --background: #c79c5a;
+  color: white;
   font-weight: 600;
-  height: 48px;
-  width: 100%;
-  max-width: 340px;
+  height: 50px;
+  width: 70%;
   --border-radius: 10px;
-  margin: 0 auto 8px;
+  display: block;
+  margin: 20px auto; /* centers horizontally */
+  padding-top: 1.3em;
+}
+
+.close-btn {
+  color: #fff;
 }
