@@ -35,3 +35,75 @@ h1 {
 ion-button {
   color: #fff;
 }
+ion-card {
+  background: #fff8f2; /* light coffee cream background */
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(59, 47, 47, 0.15);
+  margin: 20px;
+  color: #3b2f2f;
+}
+
+ion-card-header {
+  text-align: center;
+  background: linear-gradient(135deg, #c49a6c, #a67b5b);
+  color: #fff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 16px;
+}
+
+ion-card-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+ion-card-subtitle {
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.9;
+  color: black;
+}
+
+ion-list {
+  background: transparent;
+  padding: 0 10px;
+}
+
+ion-item {
+  --background: #f3dabb;
+  --inner-padding-end: 10px;
+  border-radius: 12px;
+  margin: 10px 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+ion-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(163, 130, 100, 0.2);
+}
+
+ion-thumbnail img {
+  border-radius: 75%;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 2px solid #c49a6c;
+}
+
+.span1 {
+  font-weight: 500;
+  font-size: 0.7rem;
+  color: #5a4634;
+}
+
+.span2 {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #3b2f2f;
+}
+
+.card-developer {
+  --background: #e6d1b3;
+  color: #3b2f2f;
+}
