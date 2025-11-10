@@ -9,9 +9,36 @@
 
     <ion-content class="modal-content">
 
-        <ion-label position="stacked" class="input-label">New Profile Name</ion-label>
-        <ion-input [(ngModel)]="newName" placeholder="Enter new name" class="input-field"></ion-input>
+      <div class="photo-section">
+        <div class="photo-frame" [class.has-image]="photoPreview">
+          <ng-container *ngIf="photoPreview; else noPhoto">
+            <img [src]="photoPreview" alt="Profile preview" />
+          </ng-container>
+        </div>
+        <ng-template #noPhoto>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </ng-template>
 
-      <ion-button expand="block" class="save-btn" (click)="save()">Save</ion-button>
-      <ion-button expand="block" class="save-btn" (click)="dismiss()">Cancel</ion-button>
+        <div class="photo-actions">
+          <ion-button size="small" fill="outline" (click)="fileInput.click()" [disabled]="isSaving">
+            Choose Photo
+          </ion-button>
+          <ion-button *ngIf="photoPreview" size="small" fill="clear" color="danger" (click)="removePhoto()" [disabled]="isSaving">
+            Remove
+          </ion-button>
+        </div>
+        <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)">
+        <p class="file-name" *ngIf="selectedImageName">{{ selectedImageName }}</p>
+      </div>
+
+      <ion-item lines="none">
+        <ion-label position="stacked" class="input-label">New Profile Name</ion-label>
+        <ion-input [(ngModel)]="newName" placeholder="Enter new name" class="input-field" [disabled]="isSaving"></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" class="save-btn" (click)="save()" [disabled]="isSaving">
+        <ion-spinner slot="start" *ngIf="isSaving" name="crescent"></ion-spinner>
+        Save
+      </ion-button>
+      <ion-button expand="block" class="cancel-btn" (click)="dismiss()" [disabled]="isSaving">Cancel</ion-button>
     </ion-content>

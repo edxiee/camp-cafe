@@ -25,7 +25,6 @@ import { ProfilePageModule } from './tab-menu/profile/profile.module';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-  // Storage not used (local image conversion); leaving commented for future use
   ],
   bootstrap: [AppComponent],
 })

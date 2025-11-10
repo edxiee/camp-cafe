@@ -5,55 +5,102 @@ ion-toolbar {
 
 .modal-content {
   --background: white;
-  padding: 20px;
+  padding: 24px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.photo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.photo-frame {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid rgba(199, 156, 90, 0.45);
+  background: rgba(199, 156, 90, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.photo-frame.has-image {
+  background: #fff;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-frame ion-icon {
+  font-size: 110px;
+  color: #c79c5a;
+}
+
+.photo-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.file-name {
+  margin: 0;
+  font-size: 14px;
+  color: #6b4a2b;
 }
 
 ion-item {
+  width: 100%;
+  max-width: 340px;
   --border-radius: 12px;
-  margin: 0 auto 20px auto;
-  width: 70%; 
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-ion-input {
-  padding: 8px;
-  font-size: 16px;
+  margin: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --padding-start: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
 }
 
 .input-label {
-  width: 70%;     
-  margin: 0 auto 15px auto; 
-  --padding-start: 10px;
   color: rgb(121, 73, 2);
-  text-align: left;
-  display: block;    
-  padding-top: 3em;
-  padding-bottom: 0.7em;
+  font-weight: 600;
 }
 
 .input-field {
-  width: 70%;     
-  margin: 0 auto 15px auto; 
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  --padding-start: 10px;
+  --padding-start: 12px;
+  font-size: 16px;
   color: black;
-  text-align: left;
-  display: block;    
 }
-
 
 .save-btn {
   --background: #c79c5a;
   color: white;
   font-weight: 600;
-  height: 50px;
-  width: 70%;
+  height: 48px;
+  width: 100%;
+  max-width: 340px;
   --border-radius: 10px;
-  display: block;
-  margin: 20px auto; /* centers horizontally */
+  margin: 8px auto 0;
 }
 
-ion-button {
-  color: #fff;
+.cancel-btn {
+  --background: #e0e0e0;
+  color: #4a4a4a;
+  font-weight: 600;
+  height: 48px;
+  width: 100%;
+  max-width: 340px;
+  --border-radius: 10px;
+  margin: 0 auto 8px;
 }

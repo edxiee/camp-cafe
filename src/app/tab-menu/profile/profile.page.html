@@ -1,7 +1,14 @@
 <ion-content [fullscreen]="true">
   <div class="header">
     <h1>MY PROFILE</h1>
-    <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
+    <div class="photo-wrapper">
+      <ng-container *ngIf="photoURL; else defaultAvatar">
+        <img [src]="photoURL" alt="Profile photo" />
+      </ng-container>
+    </div>
+    <ng-template #defaultAvatar>
+      <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
+    </ng-template>
     <p>{{ name }}</p>
   </div>
 

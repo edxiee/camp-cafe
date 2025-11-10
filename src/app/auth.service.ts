@@ -42,10 +42,16 @@ export class AuthService {
   }
 
   // Update the Firebase user's display name
-  async updateName(newName: string) {
+  async updateName(newName: string, photoURL?: string | null) {
     const user = this.auth.currentUser;
     if (user) {
-      await updateProfile(user, { displayName: newName });
+      const payload: { displayName?: string | null; photoURL?: string | null } = {
+        displayName: newName,
+      };
+      if (photoURL !== undefined) {
+        payload.photoURL = photoURL;
+      }
+      await updateProfile(user, payload);
     }
   }
 }
