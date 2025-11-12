@@ -34,10 +34,10 @@ import { ModalController } from '@ionic/angular';
     <ion-list>
       <ion-item class="card-developer">
         <ion-thumbnail slot="start">
-          <img src="https://tse1.explicit.bing.net/th/id/OIP.hGSCbXlcOjL_9mmzerqAbQHaHa?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" />
+          <img src="assets/images/developers/carl2.png" />
         </ion-thumbnail>
         <ion-label><span class="span2">Canilang, Carl </span><br> 
-        <span class="span1">None atm??</span>
+        <span class="span1">Made the presentation powerpoint.</span>
         </ion-label>
       </ion-item>
 
