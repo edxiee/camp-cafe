@@ -43,6 +43,33 @@ ion-card {
   color: #3b2f2f;
 }
 
+.history-card {
+  margin-bottom: 32px;
+}
+
+.history-intro {
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.history-timeline {
+  display: grid;
+  gap: 12px;
+}
+
+.history-milestone {
+  background: #f6e5cf;
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 6px rgba(59, 47, 47, 0.1);
+}
+
+.history-milestone p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 ion-card-header {
   text-align: center;
   background: linear-gradient(135deg, #c49a6c, #a67b5b);
