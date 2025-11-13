@@ -76,7 +76,7 @@ import { ModalController } from '@ionic/angular';
         <ion-thumbnail slot="start">
           <img src="assets/images/developers/ed.png" />
         </ion-thumbnail>
-        <ion-label><span class="span2">Villanueva, Ed Christian F.</span><br> 
+        <ion-label><span class="span2">Villanueva, Ed Christian pogi F.</span><br> 
         <span class="span1">Contact Number: 09759652881 </span><br> 
         <span class="span1">Developer, Made Login page, and documentation.</span>
         </ion-label>
